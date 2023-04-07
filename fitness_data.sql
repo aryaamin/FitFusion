@@ -47,13 +47,13 @@ VALUES
 (4, 4, '2023-04-03', 'snack', 200),
 (5, 5, '2023-04-04', 'breakfast', 500);
 
-INSERT INTO Exercise (exercise_id, trainee_id, date, exercise_type, duration, calories_burned)
+INSERT INTO Exercise (exercise_id, trainee_id, date, exercise_type, duration)
 VALUES 
-(1, 1, '2023-04-01', 'running', 30, 300),
-(2, 2, '2023-04-02', 'weightlifting', 45, 400),
-(3, 3, '2023-04-03', 'yoga', 60, 200),
-(4, 4, '2023-04-04', 'cycling', 45, 350),
-(5, 5, '2023-04-05', 'swimming', 60, 500);
+(1, 1, '2023-04-01', 'running', 30),
+(2, 2, '2023-04-02', 'weightlifting', 45),
+(3, 3, '2023-04-03', 'yoga', 60),
+(4, 4, '2023-04-04', 'cycling', 45),
+(5, 5, '2023-04-05', 'swimming', 60);
 
 INSERT INTO Diet_Plan (trainee_id, dietician_id, start_date, end_date, plan_description, plan_id)
 VALUES
