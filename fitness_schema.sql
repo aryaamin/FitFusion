@@ -2,9 +2,9 @@ drop table Calorie_Intake;
 drop table Exercise;
 drop table Diet_Plan;
 drop table Exercise_Plan;
-drop table Trainee;
 drop table Trainer;
 drop table Dietician;
+drop table Trainee;
 drop table Users;
 
 REVOKE USAGE ON SCHEMA public FROM dietician_role, trainer_role, trainee_role;
@@ -12,56 +12,31 @@ drop role dietician_role;
 drop role trainee_role;
 drop role trainer_role;
 
--- CREATE OR REPLACE FUNCTION calculate_calories_per_minute(exercise_type VARCHAR)
--- RETURNS INTEGER AS $$
--- BEGIN
---   RETURN CASE 
---     -- remaining to add all cases
---     WHEN exercise_type = 'running' THEN 10
---     WHEN exercise_type = 'swimming' THEN 12
---     WHEN exercise_type = 'cycling' THEN 8
---     ELSE 0
---   END;
--- END;
--- $$ LANGUAGE plpgsql IMMUTABLE;
-
-
--- CREATE OR REPLACE FUNCTION update_calories_burned()
--- RETURNS TRIGGER AS $$
--- BEGIN
---   NEW.calories_burned := calculate_calories_burned(NEW.exercise_type, NEW.duration);
---   RETURN NEW;
--- END;
--- $$ LANGUAGE plpgsql;
-
-
 
 CREATE TABLE Users (
   user_id INTEGER PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
   email VARCHAR(50) NOT NULL UNIQUE,
   password VARCHAR(50) NOT NULL,
-  height DECIMAL NOT NULL CHECK (height > 0),
-  weight DECIMAL NOT NULL CHECK (weight > 0),
   age INTEGER NOT NULL CHECK (age >= 0),
-  gender VARCHAR(10) NOT NULL CHECK (gender IN ('male', 'female', 'other'))
+  gender VARCHAR(10) NOT NULL CHECK (gender IN ('male', 'female', 'other')),
+  user_role VARCHAR(10) NOT NULL CHECK (user_role IN ('trainee', 'trainer', 'dietician'))
 );
 
 CREATE TABLE Trainee (
-  trainee_id INTEGER PRIMARY KEY,
-  user_id INTEGER REFERENCES Users(user_id),
+  trainee_id INTEGER PRIMARY KEY REFERENCES Users(user_id),
   activity_level INTEGER NOT NULL CHECK (activity_level >= 1 AND activity_level <= 5),
   goal VARCHAR(50) NOT NULL CHECK (goal IN ('lose weight', 'gain weight', 'maintain weight', 'build muscle'))
 );
 
 CREATE TABLE Trainer (
-  trainer_id INTEGER PRIMARY KEY,
-  user_id INTEGER REFERENCES Users(user_id)
+  trainer_id INTEGER,
+  trainee_id INTEGER REFERENCES Trainee(trainee_id)
 );
 
 CREATE TABLE Dietician (
-  dietician_id INTEGER PRIMARY KEY,
-  user_id INTEGER REFERENCES Users(user_id)
+  dietician_id INTEGER,
+  trainee_id INTEGER REFERENCES Trainee(trainee_id)
 );
 
 CREATE TABLE Calorie_Intake (
@@ -87,43 +62,22 @@ CREATE INDEX exercise_idx ON Exercise (trainee_id, date);
 CREATE TABLE Diet_Plan (
   plan_id INTEGER PRIMARY KEY,
   trainee_id INTEGER REFERENCES Trainee(trainee_id),
-  dietician_id INTEGER REFERENCES Dietician(dietician_id),
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
   plan_description TEXT NOT NULL CHECK (LENGTH(plan_description) > 0)
 );
 
-CREATE INDEX plan_idx ON Diet_Plan (trainee_id, dietician_id, start_date, end_date);
+CREATE INDEX plan_idx ON Diet_Plan (trainee_id, start_date, end_date);
 
 CREATE TABLE Exercise_Plan (
   plan_id INTEGER PRIMARY KEY,
   trainee_id INTEGER REFERENCES Trainee(trainee_id),
-  trainer_id INTEGER REFERENCES Trainer(trainer_id),
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
-  plan_type VARCHAR(200) NOT NULL CHECK (LENGTH(plan_type) > 0),
   plan_description TEXT NOT NULL CHECK (LENGTH(plan_description) > 0)
 );
 
-CREATE INDEX ex_plan_idx ON Exercise_Plan (trainee_id, trainer_id, start_date, end_date);
-
---Triggers
-
---Update Calories_burned after change in the Exercise table
--- CREATE TRIGGER update_calories_burned_trigger
--- AFTER UPDATE ON Exercise
--- FOR EACH ROW
--- EXECUTE FUNCTION update_calories_burned();
-
-
--- BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-
--- ALTER TABLE Exercise ADD COLUMN calories_per_minute INTEGER;
-
--- UPDATE Exercise SET calories_per_minute = calculate_calories_per_minute(exercise_type);
-
--- COMMIT;
-
+CREATE INDEX ex_plan_idx ON Exercise_Plan (trainee_id, start_date, end_date);
 
 --Roles 
 CREATE ROLE dietician_role;
