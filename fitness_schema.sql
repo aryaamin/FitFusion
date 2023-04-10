@@ -26,6 +26,8 @@ CREATE TABLE Users (
 CREATE TABLE Trainee (
   trainee_id INTEGER PRIMARY KEY REFERENCES Users(user_id),
   activity_level INTEGER NOT NULL CHECK (activity_level >= 1 AND activity_level <= 5),
+  height DECIMAL NOT NULL CHECK (height >= 0),
+  weight DECIMAL NOT NULL CHECK (weight >= 0),
   goal VARCHAR(50) NOT NULL CHECK (goal IN ('lose weight', 'gain weight', 'maintain weight', 'build muscle'))
 );
 
