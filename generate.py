@@ -32,8 +32,10 @@ for i in range(1, n):
 trainee_data = []
 for i in trainee_list:
     activity_level = random.randint(1, 5)
+    height = random.randint(140, 220)/100
+    weight = random.randint(300, 1300)/10
     goal = random.choice(['lose weight', 'gain weight', 'maintain weight', 'build muscle'])
-    trainee_data.append((i, activity_level, goal))
+    trainee_data.append((i, activity_level, height, weight, goal))
 
 # Generate random data for the Trainer table
 trainer_data = []
@@ -111,7 +113,7 @@ for i in range(len(users_data)):
     else:
         print(users_data[i], ",")
 
-print("\nINSERT INTO Trainee (trainee_id, activity_level, goal) VALUES ")
+print("\nINSERT INTO Trainee (trainee_id, activity_level, height, weight, goal) VALUES ")
 for i in range(len(trainee_data)):
     if i == len(trainee_data) - 1:
         print(trainee_data[i], ";")
