@@ -1,0 +1,5 @@
+"user": "postgres",
+"host": "localhost",
+"database": "fitness",
+"password": "9909911391",
+"port": 5432
