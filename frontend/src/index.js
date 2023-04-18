@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import Login from "./Login";
 import Home from "./Home";
+import Editinfo from "./Editinfo";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="login" element={<Login />} />
         <Route path="home" element={<Home />} />
+        <Route path="editinfo" element={<Editinfo />} />
         {/* <Route path="home/registration" element={<Registration />} />
         <Route path="course/:cid" element={<Course />} />
         <Route path="course/running" element={<Running />} />

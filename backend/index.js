@@ -11,7 +11,7 @@ const User = require("./Models/user_query");
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   cors({
-    origin: "http://localhost:3002",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );

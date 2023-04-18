@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+
+
+
 const Home = () => {
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
@@ -10,17 +13,22 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  // const handleLogout = () => {
-  //   fetch("http://localhost:3001/logout", {
-  //     method: "GET",
-  //     mode: "cors",
-  //     credentials: "include",
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       navigate("/login");
-  //     });
-  // };
+  const handleLogout = () => {
+    fetch("http://localhost:3001/logout", {
+      method: "GET",
+      mode: "cors",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        navigate("/login");
+      });
+  };
+
+  const goto = (e, path) => {
+    e.preventDefault();
+    navigate(path);
+  };
 
   const getUserInfo = () => {
     fetch("http://localhost:3001/getuserinfo", {
@@ -50,15 +58,22 @@ const Home = () => {
   });
 
   return (
+    
     <div className="container d-flex h-50">
-        <div className="mx-auto align-self-center">
-            <h1>HOME</h1>
-            <h1>YOU ARE A {role}</h1>
             {role === 'trainee'? 
-              <div>HTML FOR TRIANEE</div>
+              <div style={{ position:'fixed',left:'0px', height: '100%' }}>
+                <button 
+                type="button"
+                onClick={(e) => goto(e, "/editinfo")}
+                >Edit Info</button>
+                <button 
+                type="button"
+                onClick={handleLogout}
+                >Logout</button>
+                <h1>HI</h1>
+            </div>
               : 
               <div>HTML FOR TRAINER OR DIATICIAN</div>}
-        </div>
     </div>
   );
 };
