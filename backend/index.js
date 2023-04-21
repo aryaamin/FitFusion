@@ -42,6 +42,8 @@ app.get("/check-session", (req, res) => {
   }
 });
 
+
+
 app.get("/logout", (req, res) => {
   req.session.destroy();
   return res.json({});
@@ -57,6 +59,54 @@ app.post("/getuserinfo", async (req, res) => {
       info: info,
     });
   } else {
+    return res.json({ active: false });
+  }
+});
+
+app.post("/getcalorie", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
+    const user = new User(userid);
+    let calinfo = await user.getCalorie();
+    res.json({
+      active: true,
+      calories: calinfo,
+    });
+  } else {
+    return res.json({ active: false });
+  }
+});
+
+
+app.post("/gettt", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
+    const user = new User(userid);
+    let ttinfo = await user.getTraineeTable();
+    res.json({
+      active: true,
+      goal: ttinfo["goal"],
+      activitylevel: ttinfo["activity_level"],
+      height: ttinfo["height"],
+      weight: ttinfo["weight"],
+    });
+  } else {
+    return res.json({ active: false });
+  }
+});
+
+app.post("/editinfo", async (req, res) => {
+  if (req.session.userid) {
+    const { name, password, email, age, gender } = req.body;
+    console.log(name);
+    console.log(req.session.userid)
+    const user = new User(req.session.userid);
+    const result = await user.editinfo(name, password, email, age, gender);
+    res.json({
+      active: true,
+    });
+  }
+  else{
     return res.json({ active: false });
   }
 });

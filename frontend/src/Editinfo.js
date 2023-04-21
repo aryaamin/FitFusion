@@ -6,6 +6,7 @@ const Editinfo = () => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [age, setAge] = useState("");
+    const [gender, setGender] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
@@ -17,10 +18,8 @@ const Editinfo = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.error) {
-          setError(data.error);
-        } else if (data.active) {
-          navigate("/editinfo");
+        if (!data.active) {
+          navigate("/login");
         }
       });
   };
@@ -37,12 +36,12 @@ const Editinfo = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, password, email, age }),
+      body: JSON.stringify({ name, password, email, age, gender }),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          setError("Login Failed!");
+          setError("Edit Failed!");
         } else {
           navigate("/home");
         }
@@ -100,12 +99,29 @@ const Editinfo = () => {
                         className="form-control"
                         type="int" 
                         placeholder="" 
-                        id="email" 
-                        name="email"/>
+                        id="age" 
+                        name="age"/>
+                </div>
+            </div>
+            <div className="form-group mb-2">
+                <label htmlFor="age"> <b> Gender: </b> </label>
+                <div className="col-sm-auto">
+                    <input 
+                        value={gender} 
+                        onChange={(e) => setGender(e.target.value)}
+                        className="form-control"
+                        type="int" 
+                        placeholder="" 
+                        id="gender" 
+                        name="gender"/>
                 </div>
             </div>
             <button className="btn btn-primary"> Submit </button>
         </form>
+        <button 
+            className="btn btn-primary"
+            type="button"
+            onClick={() => navigate("/home")}> Home </button>
         {error && <div className="alert alert-danger"> {error} </div>}
     </div>
 </div>
