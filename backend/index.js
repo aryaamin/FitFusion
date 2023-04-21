@@ -112,6 +112,22 @@ app.post("/editinfo", async (req, res) => {
 });
 
 
+app.post("/getexercises", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
+    const user = new User(userid);
+    let exercises = await user.exercises();
+    // console.log(exercises);
+    res.json({
+      active: true,
+      exercises: exercises
+    });
+  }
+  else{
+    return res.json({ active: false });
+  }
+});
+
 
 app.post("/login", async (req, res) => {
   if (req.session.userid) {

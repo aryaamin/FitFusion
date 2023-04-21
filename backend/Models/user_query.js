@@ -45,6 +45,14 @@ class User {
     return 0;
   }
 
+  async exercises() {
+    const result = await pool.query(`SELECT *
+                                     FROM EXERCISE
+                                     WHERE trainee_id = $1`, [this.id]);
+
+    return result.rows;
+  }
+
 }
 
 module.exports = User;
