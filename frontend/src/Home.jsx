@@ -116,10 +116,8 @@ const Home = () => {
     <div className="container d-flex h-50">
             {role === 'trainee'? 
               <div style={{ position:'fixed',left:'0px', height: '100%' }}>
-                <button 
-                type="button"
-                onClick={() => navigate("/editinfo")}
-                >Edit Info</button>
+                <button type="button" onClick={() => navigate("/editinfo")} >Edit Info</button>
+                <button type="button" onClick={() => navigate("/trainerinfo")} >Trainer Info</button>
                 <button 
                 type="button"
                 onClick={() => handleLogout()}

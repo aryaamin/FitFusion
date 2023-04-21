@@ -128,6 +128,38 @@ app.post("/getexercises", async (req, res) => {
   }
 });
 
+app.post("/trainerinfo", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
+    const user = new User(userid);
+    let trainerinfo = await user.gettrainerinfo();
+    res.json({
+      active: true,
+      trainerinfo: trainerinfo
+    });
+  }
+  else{
+    return res.json({ active: false });
+  }
+});
+
+app.post("/availabletrainers", async (req, res) => {
+  const userid = req.session.userid;
+  const user = new User(userid);
+  let trainers = await user.availabletrainers();
+  res.json({
+    trainers: trainers
+  });
+});
+
+app.post("/update_trainer", async (req, res) => {
+  const userid = req.session.userid;
+  const user = new User(userid);
+  console.log(req.body.trainer_id);
+  await user.update_trainer(req.body.trainer_id);
+  res.json({error:false});
+});
+
 
 app.post("/login", async (req, res) => {
   if (req.session.userid) {
