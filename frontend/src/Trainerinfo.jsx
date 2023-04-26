@@ -114,6 +114,8 @@ const Trainerinfo = () => {
             minMatchCharLength: 1,
             threshold: 0,
           }}
+
+         
           onSearch={handleSearch}
         />
       </div>

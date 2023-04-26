@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+
+body {
+	font-family: 'Ubuntu', 'Nunito', sans-serif;
+	background-color: #f8f8ff;
+	text-rendering: auto;
+	height: 100%;
+	width:100%;
+    background-size: cover;
+}
+
+
+#button {
+    padding-top: 50px;
+    text-align: center;
+}
+
+/* just change the btn padding to increase bg size */
+.btn {
+    border-radius: 5px;
+    padding: 1.5rem;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    overflow:hidden;   
+}
+
+.btn:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    box-shadow: 0px 1px 0px 0px;
+}
+
+.btn-2 {
+    border-radius: 5px;
+    padding: 3.5rem;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    overflow:hidden;   
+}
+
+.btn-2:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    box-shadow: 0px 1px 0px 0px;
+}
+
+.btn-blue {
+    box-shadow: inset 0 0 0 1000px rgba(0,0,0,.6);
+    text-shadow: 0 1px 1px rgba(33, 33, 33, 0.2), 0 3px 10px rgba(33, 33, 33, 0.2), 0 3px 20px rgba(33, 33, 33, 0.4);
+    color: #f8f8ff;
+}
+
+.btn-blue p {
+    text-shadow: 1px 2px 2px rgba(0,0,0,0.1);
+    font-size: 1.75rem;
+    text-decoration: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+		color: #f8f8ff;
+	    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+.btn-blue p:hover{
+		color:#212121;
+}
+
+.btn-blue:hover {
+    box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.15);
+    text-decoration: none;
+}
+
+.text-grow{
+    transition: all .3s ease-in-out;
+}
+
+/*animate parent div so element doesn't push all content*/
+.text-grow:hover{
+    transform: scale(1.15);
+}
+
+/* duplicate the btn-bg rule to create different bgs */
+.btn-bg-workout {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('../images/workout.jpg');
+}
+.btn-bg-progress {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('../images/progress.jpg');
+}
+.btn-bg-trainer {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('../images/trainer.jpg');
+}
+.btn-bg-dietician {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('../images/dietician.webp');
+}
+
+.logout {
+    flex-grow: 1;
+    float: right;
+    padding: 8px 16px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    text-align: center;
+    color: red;
+  }
+
+  .editbtn {
+    display: block;
+    float: right;
+    padding: 8px 16px;
+    border: none;
+    background-color: transparent;
+    color: black;
+    border-radius: 2px;
+    cursor: pointer;
+    text-align: center
+  }

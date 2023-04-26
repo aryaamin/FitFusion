@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { VictoryChart, VictoryLine } from "victory";
+import "./Home.css"
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import EditIcon from "@mui/icons-material/Edit";
+
 
 
 const Home = () => {
@@ -113,43 +117,39 @@ const Home = () => {
 
   return (
     
-    <div className="container d-flex h-50">
+    <div>
             {role === 'trainee'? 
-              <div style={{ position:'fixed',left:'0px', height: '100%' }}>
-                <button type="button" onClick={() => navigate("/editinfo")} >Edit Info</button>
-                <button type="button" onClick={() => navigate("/trainerinfo")} >Trainer Info</button>
-                <button 
-                type="button"
-                onClick={() => handleLogout()}
-                >Logout</button>
-                <h1>HI</h1>
-
-    
-                <div>
-                  <h2>CALORIE GRAPH Last 5 Days</h2>
-                  <VictoryChart>
-                  <VictoryLine data={calorie}/>
-                </VictoryChart>
+              <div>
+                <div class="container my-3 py-5">
+                <button className="logout" type="button" onClick={() => handleLogout()}>{<LogoutRoundedIcon />}</button>
+                <button className="editbtn" type="button" onClick={() => navigate("/editinfo")} >{<EditIcon />}</button>
+                  <h1 class="text-center" style={{fontWeight: 900}}>WELCOME {name.toUpperCase()}</h1>
+                  <div class="row justify-content-center">
+                    <div class="text-center">
+                      <div class="p-1">
+                        <div class="text-grow" id="button">
+                          <a href="/workout" class="btn-2 btn-blue btn-bg-workout"><p>Workouts</p></a>
+                        </div>
+                      </div>
+                      <div class="">
+                        <div class="text-grow" id="button">
+                          <a href="progress" class="btn-2 btn-blue btn-bg-progress"><p>Progress</p></a>
+                        </div>
+                      </div>
+                      <div class="">
+                        <div class="text-grow" id="button">
+                          <a href="dieticianinfo" class="btn-2 btn-blue btn-bg-dietician"><p>Dieticians</p></a>
+                        </div>
+                      </div>
+                      <div class="p-1">
+                        <div class="text-grow" id="button">
+                          <a href="trainerinfo" class="btn-2 btn-blue btn-bg-trainer"><p>Trainers</p></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-                <div>
-                  <h2>Goal</h2>
-                  {goal}
-
-                  <h2>Activity Level</h2>
-                  {activityLevel}
-
-                  <h2>Height</h2>
-                  {height}
-
-                  <h2>Weight</h2>
-                  {weight}
-
-                </div>
-
-                <div>
-                  <a href="/exercises">Exercises</a>
-                </div>
+                
             </div>
               : 
               <div>HTML FOR TRAINER OR DIATICIAN</div>}
