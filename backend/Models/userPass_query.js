@@ -2,19 +2,20 @@ const pool = require("./Database");
 const bcrypt = require("bcrypt");
 
 class UserPass {
-    constructor (id) {
-        this.id = id;
+    constructor (email) {
+        this.email = email;
     }
 
-    getId() {
-        return id;
+    async getId() {
+        const result = await pool.query(`SELECT user_id FROM users where email = $1`, [this.email]);
+
+        return result.rows[0].user_id;
     }
 
     async getPassHash() {
         const result = await pool.query(`SELECT password 
                                          FROM users 
-                                         WHERE user_id = $1`, [this.id]);
-
+                                         WHERE email = $1`, [this.email]);
         return result;
     }
 
@@ -22,13 +23,14 @@ class UserPass {
         const hash = await this.getPassHash();
 
         if (!hash.rows.length) {
-            return false;
+            return 0;
         } 
 
         // const res = await bcrypt.compare(password, hash.rows[0]["hashed_password"]);
 
         if(password == hash.rows[0]["password"]){
-            return 1;
+            const id = await this.getId();
+            return id;
         }
         else{
             return 0;

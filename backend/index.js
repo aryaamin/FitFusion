@@ -43,7 +43,6 @@ app.get("/check-session", (req, res) => {
 });
 
 
-
 app.get("/logout", (req, res) => {
   req.session.destroy();
   return res.json({});
@@ -83,13 +82,16 @@ app.post("/gettt", async (req, res) => {
     const userid = req.session.userid;
     const user = new User(userid);
     let ttinfo = await user.getTraineeTable();
-    res.json({
-      active: true,
-      goal: ttinfo["goal"],
-      activitylevel: ttinfo["activity_level"],
-      height: ttinfo["height"],
-      weight: ttinfo["weight"],
-    });
+
+    if (ttinfo) {
+        res.json({
+          active: true,
+          goal: ttinfo["goal"],
+          activitylevel: ttinfo["activity_level"],
+          height: ttinfo["height"],
+          weight: ttinfo["weight"],
+        });
+    }
   } else {
     return res.json({ active: false });
   }
@@ -160,22 +162,40 @@ app.post("/update_trainer", async (req, res) => {
   res.json({error:false});
 });
 
+app.post("/register", async (req, res) => {
+  if (req.session.userid) {
+    //do nothing
+  } else {
+    const {name, password, email, age, gender, role} = req.body;
+    const user = new User("");
+    const result = await user.createUser(name, password, email, age, gender, role);
+
+    if (result && result.id) {
+      req.session.userid = result;
+      req.session.save();
+
+      res.send({});
+      console.log("REGISTRATION SUCCESSFULL");
+    } else {
+      return res.status(401).json({ error: result.e });
+    }
+  }
+});
 
 app.post("/login", async (req, res) => {
   if (req.session.userid) {
     //do nothing
   } else {
-    const { username, password } = req.body;
-    const user = new UserPass(username);
+    const { email, password } = req.body;
+    const user = new UserPass(email);
     const result = await user.verifyPassword(password);
 
-    console.log(result);
-
     if (result) {
-      req.session.userid = username;
+      req.session.userid = result;
       req.session.save();
 
       res.send({});
+      console.log(result);
       console.log("LOGIN SUCCESSFULL");
     } else {
       return res.status(401).json({ error: "Incorrect username or password" });

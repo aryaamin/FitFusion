@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [checked, setChecked] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -20,14 +21,20 @@ const Login = () => {
         } else if (data.active) {
           navigate("/home");
         }
+        
+        setChecked(true); 
       });
   };
 
   useEffect(() => {
-    checkAlreadyLogged();
+    if (!checked) {
+        checkAlreadyLogged();
+    }
   });
 
-  const handleLogin = () => {
+  const handleLogin = (event) => {
+    event.preventDefault();
+
     fetch("http://localhost:3001/login", {
       method: "POST",
       mode: "cors",
@@ -35,7 +42,7 @@ const Login = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, password }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -51,16 +58,16 @@ const Login = () => {
     <div className="container d-flex h-50">
     <div className="mx-auto align-self-center">
         <h1> Login </h1>
-        <form onSubmit={handleLogin} className="form-horizontal">
+        <form onSubmit={handleLogin} className="form-horizontal" method="POST">
             <div className="form-group mb-2">
-                <label htmlFor="ID"> <b> ID: </b> </label>
+                <label htmlFor="ID"> <b> Email: </b> </label>
                 <div className="col-sm-auto">
                     <input 
-                        value={username} 
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)}
                         className="form-control"
                         type="text" 
-                        placeholder="student id" 
+                        placeholder="email" 
                         id="id" 
                         name="id"/>
                 </div>
@@ -80,6 +87,7 @@ const Login = () => {
             </div>
             <button className="btn btn-primary"> Log In </button>
         </form>
+        <a href="/register"> Register </a>
         {error && <div className="alert alert-danger"> {error} </div>}
     </div>
 </div>

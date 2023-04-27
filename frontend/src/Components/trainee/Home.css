@@ -100,25 +100,25 @@ body {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('../images/workout.jpg');
+    background-image: url('../../../images/workout.jpg');
 }
 .btn-bg-progress {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('../images/progress.jpg');
+    background-image: url('../../../images/progress.jpg');
 }
 .btn-bg-trainer {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('../images/trainer.jpg');
+    background-image: url('../../../images/trainer.jpg');
 }
 .btn-bg-dietician {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('../images/dietician.webp');
+    background-image: url('../../../images/dietician.webp');
 }
 
 .logout {

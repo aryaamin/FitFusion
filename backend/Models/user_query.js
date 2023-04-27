@@ -9,6 +9,21 @@ class User {
     return this.id;
   }
 
+  async createUser(name, password, email, age, gender, role) {
+      let result = await pool.query(`SELECT max(user_id) FROM users`);
+      const id = result.rows[0].max + 1;
+
+      try {
+          result = await pool.query(`INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6, $7)`, [id, name, email, password, age, gender, role]);
+          
+          return {"id" : id};
+      } catch (e) {
+          return {"error" : e};
+      }
+
+  }
+
+
   async getInfo() {
     const result = await pool.query(`SELECT user_id, name, email, age, gender, user_role
                                      FROM users 
@@ -34,7 +49,11 @@ class User {
                                      WHERE trainee_id = $1 
                                       `, [this.id]);
 
-    return result.rows[0];
+    if (result.rows) {
+        return result.rows[0];
+    } else {
+        return {};
+    }
   }
 
   async editinfo(name, password, email, age, gender) {
