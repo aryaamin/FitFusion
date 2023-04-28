@@ -9,10 +9,11 @@ import TraineeHome from "./Components/trainee/Home";
 import TraineeEditinfo from "./Components/trainee/Editinfo";
 import Exercises from "./Components/trainee/Exercises";
 import Trainerinfo from "./Components/trainee/Trainerinfo";
-import Progress from "./Components/trainee/Progess";
+import TraineeProgress from "./Components/trainee/Progess";
 import Workout from "./Components/trainee/Workout";
 import TrainerHome from "./Components/trainer/Home";
 import TrainerEditInfo from "./Components/trainer/Editinfo";
+import TrainerProgress from "./Components/trainer/Progress";
 
 function App() {
   return (
@@ -26,10 +27,11 @@ function App() {
         <Route path="/trainee/editinfo" element={<TraineeEditinfo />} />
         <Route path="/trainee/trainerinfo" element={<Trainerinfo />} />
         <Route path="/trainee/exercises" element={<Exercises />} />
-        <Route path="/trainee/progress" element={<Progress />} />
+        <Route path="/trainee/progress/:id" element={<TraineeProgress />} />
         <Route path="/trainee/workout" element={<Workout />} />
         <Route path="/trainer/home" element={<TrainerHome />} />
         <Route path="/trainer/editinfo" element={<TrainerEditInfo />} />
+        <Route path="/trainer/progress" element={<TrainerProgress />} />
       </Routes>
     </BrowserRouter>
   );

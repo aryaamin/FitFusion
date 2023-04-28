@@ -12,6 +12,7 @@ const Home = () => {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
   const [checked, setChecked] = useState(false);
 
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const Home = () => {
           setRole(data.info["user_role"]);
           setEmail(data.info["Email"]);
           setGender(data.info["gender"]);
+          setId(data.info["user_id"]);
           setChecked(true);
         }
       });
@@ -80,7 +82,7 @@ const Home = () => {
                           </div>
                           <div className="">
                             <div className="text-grow" id="button">
-                              <a href="progress" className="btn-2 btn-blue btn-bg-progress"><p>Progress</p></a>
+                              <a href={`progress/${id}`} className="btn-2 btn-blue btn-bg-progress"><p>Progress</p></a>
                             </div>
                           </div>
                           <div className="">

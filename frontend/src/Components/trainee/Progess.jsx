@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { VictoryChart, VictoryLine, VictoryLabel, VictoryAxis } from "victory";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -24,7 +24,31 @@ const Progress = () => {
   const [inputexercise, setInpExercise] = useState("running");
   const [dateexercise, setDateExercise] = useState("");
   const [duration, setDuration] = useState("");
+  const [role, setRole] = useState("");
+  const [user_id, setId] = useState("");
   const idCSS = "hello";
+  const id = useParams().id;
+  
+
+  const getUserInfo = () => {
+    fetch("http://localhost:3001/getuserinfo", {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.active) {
+          navigate("/login");
+        } else {
+          setRole(data.info["user_role"]);
+          setId(data.info["user_id"]);
+        }
+      });
+  };
 
   const handleCalorie = (event) => {
     if(datecalorie === ""){
@@ -85,7 +109,7 @@ const Progress = () => {
   };
 
   const getCalorie = () => {
-    fetch("http://localhost:3001/getcalorie", {
+    fetch(`http://localhost:3001/getcalorie/${id}`, {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -110,7 +134,7 @@ const Progress = () => {
   };
 
   const getTraineeTable = () => {
-    fetch("http://localhost:3001/gettt", {
+    fetch(`http://localhost:3001/gettt/${id}`, {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -143,7 +167,7 @@ const Progress = () => {
   };
 
   const getExercises = () => {
-    fetch("http://localhost:3001/getexercises", {
+    fetch(`http://localhost:3001/getexercises/${id}`, {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -166,15 +190,19 @@ const Progress = () => {
   };
 
   useEffect(() => {
-    getExercises();
-    getCalorie();
-    getTraineeTable();
+    if (!user_id) {
+        getUserInfo();
+        getExercises();
+        getCalorie();
+        getTraineeTable();
+    }
   }, []);
 
   const handleBack = () => {
     navigate("/home");
   };
 
+  if (user_id) {
   return (
     <div class="container">
       <button className="homeicn" type="button" onClick={() => navigate("/home")}>{<HomeIcon />}</button>
@@ -300,6 +328,7 @@ const Progress = () => {
       </div>
 
       <div class="row">
+        {(user_id == id) ? ( 
         <div className="col-sm-3" style={{ left: "10px" }}>
           <div className="mx-auto align-self-center">
             <form
@@ -362,8 +391,11 @@ const Progress = () => {
             </form>
           </div>
         </div>
-
-        <div className="col-sm-3" style={{ left: "10px" }}>
+        ) :
+        (<div></div>)}
+            
+        {(user_id == id) ?
+        (<div className="col-sm-3" style={{ left: "10px" }}>
           <div className="mx-auto align-self-center">
             <form
               onSubmit={handleExercise}
@@ -427,6 +459,8 @@ const Progress = () => {
             </form>
           </div>
         </div>
+        ) :
+        ( <div></div> )}
 
         <div class="col-sm-6">
           <table style={{ marginTop: "20px", textAlign: "center", width: "100%", border: "solid" }}>
@@ -453,6 +487,7 @@ const Progress = () => {
       </div>
     </div>
   );
+  }
 };
 
 export default Progress;
