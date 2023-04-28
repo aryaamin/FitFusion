@@ -77,6 +77,34 @@ app.post("/getcalorie", async (req, res) => {
   }
 });
 
+app.post("/getdietplan", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
+    const trainee = new Trainee(userid);
+    let dietplan = await trainee.getDietPlan();
+    res.json({
+      active: true,
+      plan: dietplan,
+    });
+  } else {
+    return res.json({ active: false });
+  }
+});
+
+app.post("/getexerciseplan", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
+    const trainee = new Trainee(userid);
+    let exerciseplan = await trainee.getExercisePlan();
+    res.json({
+      active: true,
+      plan: exerciseplan,
+    });
+  } else {
+    return res.json({ active: false });
+  }
+});
+
 app.post("/updatecalorie", async (req, res) => {
   if (req.session.userid) {
     const userid = req.session.userid;

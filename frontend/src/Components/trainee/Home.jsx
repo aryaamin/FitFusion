@@ -75,7 +75,7 @@ const Home = () => {
                         <div className="text-center">
                           <div className="p-1">
                             <div className="text-grow" id="button">
-                              <a href="/workout" className="btn-2 btn-blue btn-bg-workout"><p>Workouts</p></a>
+                              <a href="workout" className="btn-2 btn-blue btn-bg-workout"><p>Workouts</p></a>
                             </div>
                           </div>
                           <div className="">

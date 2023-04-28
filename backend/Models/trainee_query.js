@@ -79,6 +79,22 @@ class Trainee {
     return result.rows;
   }
 
+  async getDietPlan() {
+    const result = await pool.query(`SELECT *
+                                     FROM diet_plan
+                                     WHERE trainee_id = $1`, [this.id]);
+
+    return result.rows;
+  }
+
+  async getExercisePlan() {
+    const result = await pool.query(`SELECT *
+                                     FROM exercise_plan
+                                     WHERE trainee_id = $1`, [this.id]);
+
+    return result.rows;
+  }
+
 }
 
 module.exports = Trainee;
