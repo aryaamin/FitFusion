@@ -123,13 +123,37 @@ const Home = () => {
     } else {
         if (role == "trainer") {
             return (<div>
-                    <h1> html for trainer </h1>
+                    <div className="container my-3 py-5">
+                    <button className="logout" type="button" onClick={() => handleLogout()}>{<LogoutRoundedIcon />}</button>
+                    <button className="editbtn" type="button" onClick={() => navigate("/trainer/editinfo")} >{<EditIcon />}</button>
+                      <h1 className="text-center" style={{fontWeight: 900}}>WELCOME {name.toUpperCase()}</h1>
+                      <div className="row justify-content-center">
+                        <div className="text-center">
+                          <div className="p-1">
+                            <div className="text-grow" id="button">
+                              <a href="/trainer/workout" className="btn-2 btn-blue btn-bg-workout"><p>Workout Plans</p></a>
+                            </div>
+                          </div>
+                          <div className="">
+                            <div className="text-grow" id="button">
+                              <a href="/trainer/progress" className="btn-2 btn-blue btn-bg-progress"><p>Trainee Progress</p></a>
+                            </div>
+                          </div>
+                          <div className="">
+                            <div className="text-grow" id="button">
+                              <a href="/trainer/meals" className="btn-2 btn-blue btn-bg-dietician"><p>Meal plans</p></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
                 </div>);
         } else {
             navigate("/trainee/home");
         }
     }
-  
+ 
 };
 
 export default Home;

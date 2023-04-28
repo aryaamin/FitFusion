@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const TraineeEditinfo = () => {
+const TrainerEditinfo = () => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -128,4 +128,4 @@ const TraineeEditinfo = () => {
   );
 };
 
-export default TraineeEditinfo;
+export default TrainerEditinfo;
