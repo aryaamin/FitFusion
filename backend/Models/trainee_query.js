@@ -48,11 +48,12 @@ class Trainee {
 
 
   async getCalorie() {
-    const result = await pool.query(`SELECT AVG(calories) AS avg_calories
+    const result = await pool.query(`SELECT AVG(calories) AS avg_calories, date
                                      FROM calorie_intake
                                      WHERE trainee_id = $1 
                                      GROUP BY date 
-                                     LIMIT 10`, [this.id]);
+                                     ORDER BY date DESC
+                                     LIMIT 5`, [this.id]);
 
     return result.rows;
   }
