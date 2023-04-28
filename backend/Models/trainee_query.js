@@ -82,7 +82,8 @@ class Trainee {
   async getDietPlan() {
     const result = await pool.query(`SELECT *
                                      FROM diet_plan
-                                     WHERE trainee_id = $1`, [this.id]);
+                                     WHERE trainee_id = $1 AND
+                                     start_date < CURRENT_DATE AND end_date > CURRENT_DATE;`, [this.id]);
 
     return result.rows;
   }
@@ -90,7 +91,8 @@ class Trainee {
   async getExercisePlan() {
     const result = await pool.query(`SELECT *
                                      FROM exercise_plan
-                                     WHERE trainee_id = $1`, [this.id]);
+                                     WHERE trainee_id = $1 AND
+                                     start_date <= CURRENT_DATE AND end_date >= CURRENT_DATE;`, [this.id]);
 
     return result.rows;
   }
