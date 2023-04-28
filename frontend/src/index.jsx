@@ -10,6 +10,7 @@ import TrainerHome from "./Components/trainer/Home";
 import Editinfo from "./Components/trainee/Editinfo";
 import Exercises from "./Components/trainee/Exercises";
 import Trainerinfo from "./Components/trainee/Trainerinfo";
+import Progress from "./Components/trainee/Progess";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/trainee/editinfo" element={<Editinfo />} />
         <Route path="/trainee/trainerinfo" element={<Trainerinfo />} />
         <Route path="/trainee/exercises" element={<Exercises />} />
+        <Route path="/trainee/progress" element={<Progress />} />
         <Route path="/trainer/home" element={<TrainerHome />} />
       </Routes>
     </BrowserRouter>

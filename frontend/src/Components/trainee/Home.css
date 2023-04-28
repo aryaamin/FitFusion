@@ -15,7 +15,6 @@ body {
     text-align: center;
 }
 
-/* just change the btn padding to increase bg size */
 .btn {
     border-radius: 5px;
     padding: 1.5rem;
@@ -136,6 +135,18 @@ body {
     display: block;
     float: right;
     padding: 8px 16px;
+    border: none;
+    background-color: transparent;
+    color: black;
+    border-radius: 2px;
+    cursor: pointer;
+    text-align: center
+  }
+
+  .homeicn {
+    display: block;
+    float: left;
+    padding: 50px 16px;
     border: none;
     background-color: transparent;
     color: black;

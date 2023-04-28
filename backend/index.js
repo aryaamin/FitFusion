@@ -7,6 +7,7 @@ const cors = require("cors");
 const port = 3001;
 const UserPass = require("./Models/userPass_query");
 const User = require("./Models/user_query");
+const Trainee = require("./Models/trainee_query");
 
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
@@ -65,8 +66,8 @@ app.post("/getuserinfo", async (req, res) => {
 app.post("/getcalorie", async (req, res) => {
   if (req.session.userid) {
     const userid = req.session.userid;
-    const user = new User(userid);
-    let calinfo = await user.getCalorie();
+    const trainee = new Trainee(userid);
+    let calinfo = await trainee.getCalorie();
     res.json({
       active: true,
       calories: calinfo,
@@ -76,12 +77,57 @@ app.post("/getcalorie", async (req, res) => {
   }
 });
 
+app.post("/updatecalorie", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
+    const trainee = new Trainee(userid);
+    const { datecalorie, meal, inputcalorie } = req.body;
+    let error = await trainee.updateCalorie(userid, datecalorie, meal, inputcalorie);
+    if(error){
+      res.json({
+        active: true,
+        error: "Unable to Submit",
+      });
+    }
+    else{
+      res.json({
+        active: true,
+      });
+    }
+  } else {
+    return res.json({ active: false });
+  }
+});
+
+app.post("/updateexercise", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
+    const trainee = new Trainee(userid);
+    const { inputexercise, dateexercise, duration } = req.body;
+    console.log(req.body);
+    let error = await trainee.updateExercise(userid, dateexercise, inputexercise, duration);
+    if(error){
+      res.json({
+        active: true,
+        error: "Unable to Submit",
+      });
+    }
+    else{
+      res.json({
+        active: true,
+      });
+    }
+  } else {
+    return res.json({ active: false });
+  }
+});
+
 
 app.post("/gettt", async (req, res) => {
   if (req.session.userid) {
     const userid = req.session.userid;
-    const user = new User(userid);
-    let ttinfo = await user.getTraineeTable();
+    const trainee = new Trainee(userid);
+    let ttinfo = await trainee.getTraineeTable();
 
     if (ttinfo) {
         res.json({
@@ -100,8 +146,6 @@ app.post("/gettt", async (req, res) => {
 app.post("/editinfo", async (req, res) => {
   if (req.session.userid) {
     const { name, password, email, age, gender } = req.body;
-    console.log(name);
-    console.log(req.session.userid)
     const user = new User(req.session.userid);
     const result = await user.editinfo(name, password, email, age, gender);
     res.json({
@@ -117,9 +161,8 @@ app.post("/editinfo", async (req, res) => {
 app.post("/getexercises", async (req, res) => {
   if (req.session.userid) {
     const userid = req.session.userid;
-    const user = new User(userid);
-    let exercises = await user.exercises();
-    // console.log(exercises);
+    const trainee = new Trainee(userid);
+    let exercises = await trainee.getExercises();
     res.json({
       active: true,
       exercises: exercises
@@ -157,7 +200,6 @@ app.post("/availabletrainers", async (req, res) => {
 app.post("/update_trainer", async (req, res) => {
   const userid = req.session.userid;
   const user = new User(userid);
-  console.log(req.body.trainer_id);
   await user.update_trainer(req.body.trainer_id);
   res.json({error:false});
 });
@@ -195,7 +237,6 @@ app.post("/login", async (req, res) => {
       req.session.save();
 
       res.send({});
-      console.log(result);
       console.log("LOGIN SUCCESSFULL");
     } else {
       return res.status(401).json({ error: "Incorrect username or password" });
