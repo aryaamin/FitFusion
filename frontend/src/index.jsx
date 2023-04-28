@@ -9,11 +9,13 @@ import TraineeHome from "./Components/trainee/Home";
 import TraineeEditinfo from "./Components/trainee/Editinfo";
 import Exercises from "./Components/trainee/Exercises";
 import Trainerinfo from "./Components/trainee/Trainerinfo";
-import TraineeProgress from "./Components/trainee/Progess";
+import TraineeProgress from "./Components/trainee/Progress";
 import Workout from "./Components/trainee/Workout";
 import TrainerHome from "./Components/trainer/Home";
 import TrainerEditInfo from "./Components/trainer/Editinfo";
 import TrainerProgress from "./Components/trainer/Progress";
+import TrainerMeal from "./Components/trainer/Meal";
+import TrainerExercisePlan from "./Components/trainer/ExercisePlan";
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
         <Route path="/trainer/home" element={<TrainerHome />} />
         <Route path="/trainer/editinfo" element={<TrainerEditInfo />} />
         <Route path="/trainer/progress" element={<TrainerProgress />} />
+        <Route path="/trainer/meals" element={<TrainerMeal />} />
+        <Route path="/trainer/exerciseplans" element={<TrainerExercisePlan />} />
       </Routes>
     </BrowserRouter>
   );
