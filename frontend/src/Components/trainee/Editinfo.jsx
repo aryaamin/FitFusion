@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const TraineeEditinfo = () => {
+const TrainerEditinfo = () => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -24,9 +24,33 @@ const TraineeEditinfo = () => {
       });
   };
 
+  const getUserInfo = () => {
+    fetch("http://localhost:3001/getuserinfo", {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.active) {
+          navigate("/login");
+        } else {
+          setName(data.info["name"]);
+          setPassword(data.info["password"]);
+          setAge(data.info["age"]);
+          setEmail(data.info["email"]);
+          setGender(data.info["gender"]);
+        }
+      });
+  };
+
   useEffect(() => {
     checkAlreadyLogged();
-  });
+    getUserInfo();
+  }, []);
 
   const handleEditinfo = () => {
     fetch("http://localhost:3001/editinfo", {
@@ -62,6 +86,7 @@ const TraineeEditinfo = () => {
                         className="form-control"
                         type="text" 
                         id="name" 
+                        required
                         name="name"/>
                 </div>
             </div>
@@ -74,6 +99,7 @@ const TraineeEditinfo = () => {
                         className="form-control"
                         type="text" 
                         id="password" 
+                        required
                         name="password"/>
                 </div>
             </div>
@@ -85,8 +111,8 @@ const TraineeEditinfo = () => {
                         onChange={(e) => setEmail(e.target.value)}
                         className="form-control"
                         type="text" 
-                        placeholder="abc@gmail.com" 
                         id="email" 
+                        required
                         name="email"/>
                 </div>
             </div>
@@ -97,23 +123,27 @@ const TraineeEditinfo = () => {
                         value={age} 
                         onChange={(e) => setAge(e.target.value)}
                         className="form-control"
-                        type="int" 
+                        type="number" 
+                        step="1"
                         placeholder="" 
                         id="age" 
+                        min="1"
+                        required
                         name="age"/>
                 </div>
             </div>
             <div className="form-group mb-2">
                 <label htmlFor="age"> <b> Gender: </b> </label>
                 <div className="col-sm-auto">
-                    <input 
-                        value={gender} 
-                        onChange={(e) => setGender(e.target.value)}
-                        className="form-control"
-                        type="int" 
-                        placeholder="" 
-                        id="gender" 
-                        name="gender"/>
+                <select
+                    id="dropdown"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <option value="male">male</option>
+                    <option value="female">female</option>
+                    <option value="other">other</option>
+                  </select>
                 </div>
             </div>
             <button className="btn btn-primary"> Submit </button>
@@ -128,4 +158,4 @@ const TraineeEditinfo = () => {
   );
 };
 
-export default TraineeEditinfo;
+export default TrainerEditinfo;

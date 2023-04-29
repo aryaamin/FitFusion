@@ -51,6 +51,22 @@ class Trainee {
 
   }
 
+  async updateHeight(height_new) {  
+    try {
+        result = await pool.query(`update trainee set height = $2 where trainee_id = $1`, [this.id, height_new]);
+    } catch (e) {
+        return {"error" : e};
+    }
+  } 
+
+  async updateWeight(weight_new) {  
+    try {
+        result = await pool.query(`update trainee set weight = $2 where trainee_id = $1`, [this.id, weight_new]);
+    } catch (e) {
+        return {"error" : e};
+    }
+  } 
+
   async updateExercise(trainee_id, date, exercise, duration) {
     
     let result = await pool.query(`SELECT max(exercise_id) FROM exercise`);

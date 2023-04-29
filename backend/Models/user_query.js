@@ -25,7 +25,7 @@ class User {
 
 
   async getInfo() {
-    const result = await pool.query(`SELECT user_id, name, email, age, gender, user_role
+    const result = await pool.query(`SELECT user_id, name, password, email, age, gender, user_role
                                      FROM users 
                                      WHERE user_id = $1`, [this.id]);
 
@@ -34,8 +34,8 @@ class User {
 
   async editinfo(name, password, email, age, gender) {
     const result = await pool.query(`UPDATE users
-                                     SET name = $2
-                                     WHERE user_id = $1`, [this.id, name]);
+                                     SET name = $2, password = $3, email = $4, age = $5, gender = $6
+                                     WHERE user_id = $1`, [this.id, name, password, email, age, gender]);
 
     return 0;
   }

@@ -193,7 +193,6 @@ app.post("/updateexercise", async (req, res) => {
     const userid = req.session.userid;
     const trainee = new Trainee(userid);
     const { inputexercise, dateexercise, duration } = req.body;
-    console.log(req.body);
     let error = await trainee.updateExercise(userid, dateexercise, inputexercise, duration);
     if(error){
       res.json({
@@ -244,6 +243,20 @@ app.post("/editinfo", async (req, res) => {
   else{
     return res.json({ active: false });
   }
+});
+
+app.post("/updateheight", async (req, res) => {
+  const userid = req.session.userid;
+  const user = new Trainee(userid);
+  await user.updateHeight(req.body.height_new);
+  res.json({error:false});
+});
+
+app.post("/updateweight", async (req, res) => {
+  const userid = req.session.userid;
+  const user = new Trainee(userid);
+  await user.updateWeight(req.body.weight_new);
+  res.json({error:false});
 });
 
 
