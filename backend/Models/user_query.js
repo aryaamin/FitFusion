@@ -63,12 +63,18 @@ class User {
   }
   
   async update_trainer(trainer_id) {
-    const result = await pool.query(`update trainer set trainer_id = $2 where trainee_id = $1`, [this.id, trainer_id]);
+    var result = await pool.query(`update trainer set trainer_id = $2 where trainee_id = $1`, [this.id, trainer_id]);
+    if(result.rowCount === 0){
+      result = await pool.query(`INSERT into trainer values ($2, $1)`, [this.id, trainer_id]);
+    }
     return result.rows;
   }
 
   async update_dietician(dietician_id) {
-    const result = await pool.query(`update dietician set dietician_id = $2 where trainee_id = $1`, [this.id, dietician_id]);
+    var result = await pool.query(`update dietician set dietician_id = $2 where trainee_id = $1`, [this.id, dietician_id]);
+    if(result.rowCount === 0){
+      result = await pool.query(`INSERT into dietician values ($2, $1)`, [this.id, dietician_id]);
+    }
     return result.rows;
   }
 }

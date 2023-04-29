@@ -291,10 +291,20 @@ app.post("/trainerinfo", async (req, res) => {
     const userid = req.session.userid;
     const user = new Trainee(userid);
     let trainerinfo = await user.getTrainerInfo();
-    res.json({
-      active: true,
-      trainerinfo: trainerinfo
-    });
+    if(trainerinfo){
+      res.json({
+        active: true,
+        assigned: true,
+        trainerinfo: trainerinfo
+      });
+    }
+    else{
+      res.json({
+        active: true,
+        assigned: false,
+      });
+    }
+    
   }
   else{
     return res.json({ active: false });
@@ -306,10 +316,19 @@ app.post("/dieticianinfo", async (req, res) => {
     const userid = req.session.userid;
     const user = new Trainee(userid);
     let dieticianinfo = await user.getDieticianInfo();
-    res.json({
-      active: true,
-      dieticianinfo: dieticianinfo
-    });
+    if(dieticianinfo){
+      res.json({
+        active: true,
+        assigned: true,
+        dieticianinfo: dieticianinfo
+      });
+    }
+    else{
+      res.json({
+        active: true,
+        assigned: false,
+      });
+    }
   }
   else{
     return res.json({ active: false });

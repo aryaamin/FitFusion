@@ -6,6 +6,7 @@ import { ListGroup } from 'react-bootstrap';
 const Dieticianinfo = () => {
   const navigate = useNavigate();
   const [info, setInfo] = useState("");
+  const [assigned, setAssigned] = useState(false);
   const [dieticians, setdieticians] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
@@ -23,7 +24,10 @@ const Dieticianinfo = () => {
         if (!data.active) {
           navigate("/login");
         } else {
+          if(data.assigned){
+            setAssigned(data.assigned);
             setInfo(data.dieticianinfo);
+          }
         }
       });
   };
@@ -84,30 +88,35 @@ const Dieticianinfo = () => {
     <div className="container">
         <button className="homeicn" type="button" onClick={() => navigate("/home")}>{<HomeIcon />}</button>
         <div className="row">
-        <div className="col-sm-6 py-5" style={{fontSize: "x-large"}}>
-        <h2> Current Dietician </h2>
-        <table>
-            <tbody>
-            <tr>
-                <td style={{fontWeight: "bold"}}>Name: </td>
-                <td>{info.name}</td>
-            </tr>
-            <tr>
-                <td style={{fontWeight: "bold"}}>Email: </td>
-                <td>{info.email}</td>
-            </tr>
-            <tr>
-                <td style={{fontWeight: "bold"}}>Age: </td>
-                <td>{info.age}</td>
-            </tr>
-            <tr>
-                <td style={{fontWeight: "bold"}}>Gender: </td>
-                <td>{info.gender}</td>
-            </tr>
-            </tbody>
-        </table>
-
-        </div>
+        {assigned ? 
+          <div className="col-sm-6 py-5" style={{fontSize: "x-large"}}>
+            <h2> Current Dietician </h2>
+            <table>
+                <tbody>
+                <tr>
+                    <td style={{fontWeight: "bold"}}>Name: </td>
+                    <td>{info.name}</td>
+                </tr>
+                <tr>
+                    <td style={{fontWeight: "bold"}}>Email: </td>
+                    <td>{info.email}</td>
+                </tr>
+                <tr>
+                    <td style={{fontWeight: "bold"}}>Age: </td>
+                    <td>{info.age}</td>
+                </tr>
+                <tr>
+                    <td style={{fontWeight: "bold"}}>Gender: </td>
+                    <td>{info.gender}</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+         : 
+         <div className="col-sm-6 py-5" style={{fontSize: "x-large"}}>
+         <h2> No Dietician </h2>
+         </div>
+        }
 
         <div className="col-sm-5 py-5">
         <div>
