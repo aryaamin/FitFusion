@@ -48,6 +48,9 @@ const Progress = () => {
   };
 
   const changeWeight = () => {
+    if (user_id != id) {
+        return;
+    }
     const userInput = prompt("Enter Weight:");
 
     if (userInput !== null) {
@@ -79,6 +82,9 @@ const Progress = () => {
   };
 
   const changeHeight = () => {
+    if (user_id != id) {
+        return;
+    }
     const userInput = prompt("Enter Height:");
 
     if (userInput !== null) {
