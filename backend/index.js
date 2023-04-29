@@ -265,8 +265,8 @@ app.post("/getexercises/:id", async (req, res) => {
 app.post("/trainerinfo", async (req, res) => {
   if (req.session.userid) {
     const userid = req.session.userid;
-    const user = new User(userid);
-    let trainerinfo = await user.gettrainerinfo();
+    const user = new Trainee(userid);
+    let trainerinfo = await user.getTrainerInfo();
     res.json({
       active: true,
       trainerinfo: trainerinfo
@@ -277,12 +277,36 @@ app.post("/trainerinfo", async (req, res) => {
   }
 });
 
+app.post("/dieticianinfo", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
+    const user = new Trainee(userid);
+    let dieticianinfo = await user.getDieticianInfo();
+    res.json({
+      active: true,
+      dieticianinfo: dieticianinfo
+    });
+  }
+  else{
+    return res.json({ active: false });
+  }
+});
+
 app.post("/availabletrainers", async (req, res) => {
   const userid = req.session.userid;
   const user = new User(userid);
-  let trainers = await user.availabletrainers();
+  let trainers = await user.availableTrainers();
   res.json({
     trainers: trainers
+  });
+});
+
+app.post("/availabledieticians", async (req, res) => {
+  const userid = req.session.userid;
+  const user = new User(userid);
+  let dieticians = await user.availableDieticians();
+  res.json({
+    dieticians: dieticians
   });
 });
 
@@ -290,6 +314,13 @@ app.post("/update_trainer", async (req, res) => {
   const userid = req.session.userid;
   const user = new User(userid);
   await user.update_trainer(req.body.trainer_id);
+  res.json({error:false});
+});
+
+app.post("/update_dietician", async (req, res) => {
+  const userid = req.session.userid;
+  const user = new User(userid);
+  await user.update_dietician(req.body.dietician_id);
   res.json({error:false});
 });
 

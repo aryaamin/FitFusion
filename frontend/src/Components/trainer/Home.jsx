@@ -121,7 +121,7 @@ const Home = () => {
                 </div>
         );
     } else {
-        if (role == "trainer") {
+        if (role === "trainer") {
             return (<div>
                     <div className="container my-3 py-5">
                     <button className="logout" type="button" onClick={() => handleLogout()}>{<LogoutRoundedIcon />}</button>

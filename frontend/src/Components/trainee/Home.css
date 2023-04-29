@@ -154,3 +154,7 @@ body {
     cursor: pointer;
     text-align: center
   }
+
+  .list-group-item-hover:hover {
+    background-color: #f8f9fa;
+  }

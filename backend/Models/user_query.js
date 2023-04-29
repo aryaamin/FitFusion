@@ -40,17 +40,7 @@ class User {
     return 0;
   }
 
-
-  async gettrainerinfo() {
-    const result = await pool.query(`SELECT t.trainer_id, u.name, u.email, u.age, u.gender
-                                    FROM Trainer t
-                                    JOIN Users u ON t.trainer_id = u.user_id
-                                    WHERE t.trainee_id = $1`, [this.id]);
-
-    return result.rows[0];
-  }
-
-  async availabletrainers() {
+  async availableTrainers() {
     const result = await pool.query(`SELECT user_id, name, age, gender
     FROM Users
     WHERE user_role = 'trainer';
@@ -58,10 +48,23 @@ class User {
 
     return result.rows;
   }
+
+  async availableDieticians() {
+    const result = await pool.query(`SELECT user_id, name, age, gender
+    FROM Users
+    WHERE user_role = 'dietician';
+    `);
+
+    return result.rows;
+  }
   
   async update_trainer(trainer_id) {
     const result = await pool.query(`update trainer set trainer_id = $2 where trainee_id = $1`, [this.id, trainer_id]);
+    return result.rows;
+  }
 
+  async update_dietician(dietician_id) {
+    const result = await pool.query(`update dietician set dietician_id = $2 where trainee_id = $1`, [this.id, dietician_id]);
     return result.rows;
   }
 }

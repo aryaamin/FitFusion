@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import { ListGroup } from 'react-bootstrap';
 
-const Trainerinfo = () => {
+const Dieticianinfo = () => {
   const navigate = useNavigate();
   const [info, setInfo] = useState("");
-  const [trainers, settrainers] = useState([]);
+  const [dieticians, setdieticians] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
-  const getTrainerinfo = () => {
-    fetch("http://localhost:3001/trainerinfo", {
+  const getDieticianinfo = () => {
+    fetch("http://localhost:3001/dieticianinfo", {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -23,13 +23,13 @@ const Trainerinfo = () => {
         if (!data.active) {
           navigate("/login");
         } else {
-          setInfo(data.trainerinfo);
+            setInfo(data.dieticianinfo);
         }
       });
   };
 
-  const getTrainers = () => {
-    fetch("http://localhost:3001/availabletrainers", {
+  const getDieticians = () => {
+    fetch("http://localhost:3001/availabledieticians", {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -39,43 +39,44 @@ const Trainerinfo = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        settrainers(data.trainers);
+        setdieticians(data.dieticians);
       });
   };
 
   useEffect(() => {
-    getTrainerinfo();
-    getTrainers();
+    getDieticianinfo();
+    getDieticians();
   }, []);
 
 
-  const handleUpdate = async (trainer_id) => {
-    const update = window.confirm("Change your Trainer?");
+  const handleUpdate = async (dietician_id) => {
+    const update = window.confirm("Change your Dietician?");
     if(update){
-      await fetch("http://localhost:3001/update_trainer", {
+      await fetch("http://localhost:3001/update_dietician", {
         method: "POST",
         mode: "cors",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({trainer_id:trainer_id}),
+        body: JSON.stringify({dietician_id:dietician_id}),
       })
       .then((res) => res.json())
       .then((data) => {
           console.log("Updated Sucessfully");
-          getTrainerinfo();
+          getDieticianinfo();
       });
       
     }
     
   };
 
+
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
   };
 
-  const filteredUsers = trainers.filter((user) =>
+  const filteredUsers = dieticians.filter((user) =>
     user.name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
@@ -84,7 +85,7 @@ const Trainerinfo = () => {
         <button className="homeicn" type="button" onClick={() => navigate("/home")}>{<HomeIcon />}</button>
         <div className="row">
         <div className="col-sm-6 py-5" style={{fontSize: "x-large"}}>
-        <h2> Current Trainer </h2>
+        <h2> Current Dietician </h2>
         <table>
             <tbody>
             <tr>
@@ -143,4 +144,4 @@ const Trainerinfo = () => {
   );
 };
 
-export default Trainerinfo;
+export default Dieticianinfo;

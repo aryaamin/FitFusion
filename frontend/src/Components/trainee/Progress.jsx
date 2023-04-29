@@ -5,7 +5,6 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import GaugeChart from "react-gauge-chart";
 import GradientSVG from "./gradientSVG";
-import ReactScrollableList from "react-scrollable-list";
 import HomeIcon from "@mui/icons-material/Home";
 
 
@@ -13,7 +12,7 @@ const Progress = () => {
   const navigate = useNavigate();
   const [exercises, setExercises] = useState([]);
   const [calorie, setCalorie] = useState([0, 0, 0, 0, 0]);
-  const [activityLevel, setactivityLevel] = useState("");
+  const [activityLevel, setactivityLevel] = useState(1);
   const [activityLevelType, setactivityLevelType] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
@@ -151,13 +150,13 @@ const Progress = () => {
           setHeight(data.height);
           setWeight(data.weight);
           setBmi(data.weight / (data.height * data.height));
-          if (activityLevel === 1) {
+          if (data.activitylevel === 1) {
             setactivityLevelType("Sedentary");
-          } else if (activityLevel === 2) {
+          } else if (data.activitylevel === 2) {
             setactivityLevelType("Lightly Active");
-          } else if (activityLevel === 3) {
+          } else if (data.activitylevel === 3) {
             setactivityLevelType("Moderately Active");
-          } else if (activityLevel === 4) {
+          } else if (data.activitylevel === 4) {
             setactivityLevelType("Very Active");
           } else {
             setactivityLevelType("Extremely Active ");

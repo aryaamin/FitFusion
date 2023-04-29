@@ -126,6 +126,24 @@ class Trainee {
     return result.rows;
   }
 
+  async getTrainerInfo() {
+    const result = await pool.query(`SELECT t.trainer_id, u.name, u.email, u.age, u.gender
+                                    FROM Trainer t
+                                    JOIN Users u ON t.trainer_id = u.user_id
+                                    WHERE t.trainee_id = $1`, [this.id]);
+
+    return result.rows[0];
+  }
+
+  async getDieticianInfo() {
+    const result = await pool.query(`SELECT t.dietician_id, u.name, u.email, u.age, u.gender
+                                    FROM Dietician t
+                                    JOIN Users u ON t.dietician_id = u.user_id
+                                    WHERE t.trainee_id = $1`, [this.id]);
+
+    return result.rows[0];
+  }
+
 }
 
 module.exports = Trainee;
