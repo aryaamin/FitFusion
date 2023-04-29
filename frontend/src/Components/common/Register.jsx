@@ -6,8 +6,12 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("male");
-  const [role, setRole] = useState("trainee");
+  const [role, setRole] = useState("trainer");
   const [email, setEmail] = useState("");
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [goal, setGoal] = useState("lose weight");
+  const [activity, setActivity] = useState(1);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -41,12 +45,12 @@ const Register = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({name, password, email, age, gender, role}),
+      body: JSON.stringify({name, password, email, age, gender, role, height, weight, goal, activity}),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          setError("Register Failed!");
+          alert(data.error);
         } else {
           navigate("/login");
         }
@@ -122,12 +126,64 @@ const Register = () => {
                 <label htmlFor="role"> <b> Role: </b> </label>
                 <div className="col-sm-auto">
                      <select id="dropdown" value={role} onChange={(e) =>  setRole(e.target.value)}>
-                        <option value="trainee">trainee</option>
                         <option value="trainer">trainer</option>
+                        <option value="trainee">trainee</option>
                         <option value="dietician">dietician</option>
                      </select>
                 </div>
             </div>
+            {role == "trainee" ? (
+                <div>
+                <div className="form-group mb-2">
+                    <label htmlFor="Height"> <b> Height: </b> </label>
+                    <div className="col-sm-auto">
+                        <input 
+                            value={height} 
+                            onChange={(e) => setHeight(e.target.value)}
+                            className="form-control"
+                            type="number" 
+                            id="height" 
+                            name="height"/>
+                    </div>
+                </div>
+                <div className="form-group mb-2">
+                    <label htmlFor="Weight"> <b> Weight: </b> </label>
+                    <div className="col-sm-auto">
+                        <input 
+                            value={weight} 
+                            onChange={(e) => setWeight(e.target.value)}
+                            className="form-control"
+                            type="number" 
+                            id="weight" 
+                            name="weight"/>
+                    </div>
+                </div>
+                <div className="form-group mb-2">
+                    <label htmlFor="role"> <b> Goal: </b> </label>
+                    <div className="col-sm-auto">
+                         <select id="dropdown" value={goal} onChange={(e) => setGoal(e.target.value)}>
+                            <option value="lose weight">lose weight</option>
+                            <option value="gain weight">gain weight</option>
+                            <option value="maintain weight">maintain weight</option>
+                            <option value="build muscle">build muscle</option>
+                         </select>
+                    </div>
+                </div>
+                <div className="form-group mb-2">
+                    <label htmlFor="activity_level"> <b> Activity Level: </b> </label>
+                    <div className="col-sm-auto">
+                         <select id="dropdown" value={activity} onChange={(e) => setActivity(e.target.value)}>
+                            <option value="1">sedentary</option>
+                            <option value="2">little active</option>
+                            <option value="3">active</option>
+                            <option value="4">decently active</option>
+                            <option value="5">exetremely active</option>
+                         </select>
+                    </div>
+                </div>
+                </div>
+            ) : (<div></div>)}
+
             <button className="btn btn-primary"> Register </button>
         </form>
         <a href="/login">Login </a>

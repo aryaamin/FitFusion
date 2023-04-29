@@ -22,11 +22,7 @@ const Home = () => {
         if (!data.active) {
           navigate("/login");
         } else {
-          if(data.info["user_role"] === "trainee"){
-              navigate("/trainee/home");
-          } else {
-              navigate("/trainer/home");
-          }
+          navigate(`/${data.info.user_role}/home`);
         }
       });
   };

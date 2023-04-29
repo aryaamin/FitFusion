@@ -14,9 +14,10 @@ import Workout from "./Components/trainee/Workout";
 import TrainerHome from "./Components/trainer/Home";
 import TrainerEditInfo from "./Components/trainer/Editinfo";
 import TrainerProgress from "./Components/trainer/Progress";
-import TrainerMeal from "./Components/trainer/Meal";
 import TrainerExercisePlan from "./Components/trainer/ExercisePlan";
 import Dieticianinfo from "./Components/trainee/DieticianInfo";
+import DieticianHome from "./Components/dietician/Home";
+import DieticianMeal from "./Components/dietician/Meal";
 
 function App() {
   return (
@@ -36,8 +37,9 @@ function App() {
         <Route path="/trainer/home" element={<TrainerHome />} />
         <Route path="/trainer/editinfo" element={<TrainerEditInfo />} />
         <Route path="/trainer/progress" element={<TrainerProgress />} />
-        <Route path="/trainer/meals" element={<TrainerMeal />} />
         <Route path="/trainer/exerciseplans" element={<TrainerExercisePlan />} />
+        <Route path="/dietician/home" element={<DieticianHome />} />
+        <Route path="/dietician/meals" element={<DieticianMeal />} />
       </Routes>
     </BrowserRouter>
   );

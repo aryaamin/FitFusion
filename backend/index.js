@@ -9,6 +9,7 @@ const UserPass = require("./Models/userPass_query");
 const User = require("./Models/user_query");
 const Trainee = require("./Models/trainee_query");
 const Trainer = require("./Models/trainer_query");
+const Dietician = require("./Models/dietician_query");
 
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
@@ -53,8 +54,18 @@ app.get("/logout", (req, res) => {
 app.get("/gettrainees", async (req, res) => {
   if (req.session.userid) {
     const userid = req.session.userid;
-    const trainer = new Trainer(userid);
-    let info = await trainer.getTrainees();
+
+    const user = new User(userid);
+    let role = (await user.getInfo()).user_role;
+
+    let query;
+    if (role == "trainer") {
+        query = new Trainer(userid);
+    } else if (role == "dietician") {
+        query = new Dietician(userid);
+    }
+
+    let info = await query.getTrainees();
     res.json({
       active: true,
       info: info,
@@ -341,18 +352,18 @@ app.post("/register", async (req, res) => {
   if (req.session.userid) {
     //do nothing
   } else {
-    const {name, password, email, age, gender, role} = req.body;
+    const {name, password, email, age, gender, role, height, weight, goal, activity} = req.body;
     const user = new User("");
-    const result = await user.createUser(name, password, email, age, gender, role);
+    const result = await user.createUser(name, password, email, age, gender, role, height, weight, goal, activity);
 
     if (result && result.id) {
-      req.session.userid = result;
+      req.session.userid = result.id;
       req.session.save();
 
       res.send({});
       console.log("REGISTRATION SUCCESSFULL");
     } else {
-      return res.status(401).json({ error: result.e });
+      return res.json({ error: result.error });
     }
   }
 });

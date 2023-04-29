@@ -1,6 +1,6 @@
 const pool = require("./Database");
 
-class Trainer {
+class Dietician {
   constructor(id) {
     this.id = id;
   }
@@ -13,9 +13,9 @@ class Trainer {
     
     const result = await pool.query(`SELECT user_id, name
                                      FROM Users
-                                     INNER JOIN Trainer
+                                     INNER JOIN Dietician
                                      ON user_id = trainee_id
-                                     WHERE trainer_id = $1
+                                     WHERE dietician_id = $1
                                      `, [this.id]);
 
     if (result.rows) {
@@ -28,4 +28,4 @@ class Trainer {
 
 }
 
-module.exports = Trainer;
+module.exports = Dietician;

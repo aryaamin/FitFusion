@@ -9,13 +9,17 @@ class User {
     return this.id;
   }
 
-  async createUser(name, password, email, age, gender, role) {
+  async createUser(name, password, email, age, gender, role, height, weight, goal, activity) {
       let result = await pool.query(`SELECT max(user_id) FROM users`);
       const id = result.rows[0].max + 1;
 
       try {
           result = await pool.query(`INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6, $7)`, [id, name, email, password, age, gender, role]);
-          
+
+          if (role == "trainee") {
+              result = await pool.query(`INSERT INTO trainee VALUES ($1, $2, $3, $4, $5)`, [id, activity, height, weight, goal]);
+          }
+
           return {"id" : id};
       } catch (e) {
           return {"error" : e};
