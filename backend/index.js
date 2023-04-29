@@ -75,6 +75,54 @@ app.get("/gettrainees", async (req, res) => {
   }
 });
 
+app.get("/getplans", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
+
+    const user = new User(userid);
+    let role = (await user.getInfo()).user_role;
+
+    let query;
+    if (role == "trainer") {
+        query = new Trainer(userid);
+    } else if (role == "dietician") {
+        query = new Dietician(userid);
+    }
+
+    let info = await query.getPlans();
+    res.json({
+      active: true,
+      info: info,
+    });
+  } else {
+    return res.json({ active: false });
+  }
+});
+
+app.post("/deleteplan", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
+
+    const user = new User(userid);
+    let role = (await user.getInfo()).user_role;
+
+    let query;
+    if (role == "trainer") {
+        query = new Trainer(userid);
+    } else if (role == "dietician") {
+        query = new Dietician(userid);
+    }
+
+    let info = await query.deletePlan(req.body.planid);
+    res.json({
+      active: true,
+      info: info,
+    });
+  } else {
+    return res.json({ active: false });
+  }
+});
+
 app.post("/getuserinfo", async (req, res) => {
   if (req.session.userid) {
     const userid = req.session.userid;

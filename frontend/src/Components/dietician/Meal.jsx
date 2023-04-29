@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
-import { Form, Button, ListGroup } from 'react-bootstrap';
+import { Form, Button, ListGroup, Table } from 'react-bootstrap';
 
-const TrainerMeal = () => {
+const DieticianMeal = () => {
   const [trainee, setTrainee] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [id, setId] = useState(0);
   const [selectedTrainee, setSelectedTrainee] = useState("");
   const [description, setDescription] = useState("");
+  const [workoutPlans, setWorkoutPlans] = useState([]);
 
   const navigate = useNavigate();
 
@@ -25,23 +27,31 @@ const TrainerMeal = () => {
         if (!data.active) {
           navigate("/login");
         } else {
-          console.log(data.info);
           setTrainee(data.info);
+        }
+      });
+  };
+
+  const getPlans = () => {
+    fetch("http://localhost:3001/getPlans", {
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.active) {
+          navigate("/login");
+        } else {
+          setWorkoutPlans(data.info);
         }
       });
   };
 
   const handleSubmit = (e) => {
       e.preventDefault();
-
-      let id;
-      for (let item in trainee) {
-          item = trainee[item];
-          if (item.name == selectedTrainee) {
-              id = item.user_id;
-              break;
-          }
-      }
 
       let data = {startDate, endDate, id, description};
 
@@ -62,16 +72,42 @@ const TrainerMeal = () => {
               if (data.error) {
                   alert(data.error);
               } else {
-                  alert(`Successfully added a meal plan for trainee ${selectedTrainee}`);
+                  getPlans();
+                  alert(`Successfully added a diet plan`);
               }
           }
         });
 
   }
 
+  const handleDelete = (planid) => {
+      fetch("http://localhost:3001/deleteplan", {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+          body : JSON.stringify({planid})
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.active) {
+            navigate("/login");
+          } else {
+              if (data.error) {
+                  alert(data.error);
+              } else {
+                  getPlans();
+                  alert(`Successfully deleted the diet plan`);
+              }
+          }
+        });
+  }
 
   useEffect(() => {
     getTrainees();
+    getPlans();
   }, []);
 
   return (
@@ -89,7 +125,7 @@ const TrainerMeal = () => {
         </div>
 
         <div className="col-sm-6">
-          <h3>Add Meal Plan</h3>
+          <h3>Add Diet Plan</h3>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formStartDate">
               <Form.Label>Start Date</Form.Label>
@@ -113,10 +149,10 @@ const TrainerMeal = () => {
 
             <Form.Group controlId="formSelect">
               <Form.Label>Select Trainee</Form.Label>
-              <Form.Control as="select" value={selectedTrainee} onChange={(e) => {setSelectedTrainee(e.target.value)}}>
-                <option>Select a trainee </option>
+              <Form.Control as="select" value={id} onChange={(e) => {setId(e.target.value)}}>
+                <option value="0">Select a trainee </option>
                 {trainee.map((item, index) => (
-                    <option>{item.name}</option>
+                    <option value = {item.user_id}>{item.name}</option>
                 ))}
               </Form.Control>
             </Form.Group>
@@ -138,8 +174,40 @@ const TrainerMeal = () => {
           </Form>
         </div>
       </div>
+
+     <br/><br/><br/>
+     {id != 0 ? 
+     (
+      <div>
+      <h3>Current Diet Plans For {trainee.filter((t) => {return t.user_id == id})[0].name}</h3>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {workoutPlans.filter((p) => {return p.trainee_id == id}).map((plan, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{plan.plan_description}</td>
+              <td>{plan.start_date}</td>
+              <td>{plan.end_date}</td>
+              <td>
+                <Button variant="danger" onClick={() => {handleDelete(plan.plan_id)}}>Delete</Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      </div>) : (<div></div>)}
+
     </div>
   );
 };
 
-export default TrainerMeal;
+export default DieticianMeal;

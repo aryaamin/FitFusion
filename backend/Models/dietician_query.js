@@ -18,13 +18,31 @@ class Dietician {
                                      WHERE dietician_id = $1
                                      `, [this.id]);
 
-    if (result.rows) {
-        return result.rows;
-    } else {
-        return {};
-    }
+    return result.rows;
   }
 
+
+  async getPlans() {
+    
+    const result = await pool.query(`SELECT *
+                                     FROM Diet_Plan
+                                     INNER JOIN Dietician
+                                     ON Dietician.trainee_id = Diet_Plan.trainee_id
+                                     WHERE Dietician.dietician_id = $1
+                                     `, [this.id]);
+
+    return result.rows;
+  }
+
+  async deletePlan(planid) {
+    
+    const result = await pool.query(`DELETE 
+                                     FROM Diet_Plan
+                                     WHERE plan_id = $1 
+                                     `, [planid]);
+
+    return result.rows;
+  }
 
 }
 

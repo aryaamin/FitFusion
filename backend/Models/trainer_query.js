@@ -18,13 +18,30 @@ class Trainer {
                                      WHERE trainer_id = $1
                                      `, [this.id]);
 
-    if (result.rows) {
-        return result.rows;
-    } else {
-        return {};
-    }
+    return result.rows;
   }
 
+  async getPlans() {
+    
+    const result = await pool.query(`SELECT *
+                                     FROM Exercise_Plan
+                                     INNER JOIN Trainer
+                                     ON Exercise_Plan.trainee_id = Trainer.trainee_id
+                                     WHERE Trainer.trainer_id = $1
+                                     `, [this.id]);
+
+    return result.rows;
+  }
+
+  async deletePlan(planid) {
+    
+    const result = await pool.query(`DELETE 
+                                     FROM Exercise_Plan
+                                     WHERE plan_id = $1 
+                                     `, [planid]);
+
+    return result.rows;
+  }
 
 }
 
