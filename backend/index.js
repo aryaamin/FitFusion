@@ -8,6 +8,7 @@ const port = 3001;
 const UserPass = require("./Models/userPass_query");
 const User = require("./Models/user_query");
 const Trainee = require("./Models/trainee_query");
+const Trainer = require("./Models/trainer_query");
 
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
@@ -49,6 +50,20 @@ app.get("/logout", (req, res) => {
   return res.json({});
 });
 
+app.get("/gettrainees", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
+    const trainer = new Trainer(userid);
+    let info = await trainer.getTrainees();
+    res.json({
+      active: true,
+      info: info,
+    });
+  } else {
+    return res.json({ active: false });
+  }
+});
+
 app.post("/getuserinfo", async (req, res) => {
   if (req.session.userid) {
     const userid = req.session.userid;
@@ -63,9 +78,9 @@ app.post("/getuserinfo", async (req, res) => {
   }
 });
 
-app.post("/getcalorie", async (req, res) => {
-  if (req.session.userid) {
-    const userid = req.session.userid;
+app.post("/getcalorie/:id", async (req, res) => {
+  if (req.session.userid && req.params.id) {
+    const userid = req.params.id;
     const trainee = new Trainee(userid);
     let calinfo = await trainee.getCalorie();
     res.json({
@@ -77,9 +92,9 @@ app.post("/getcalorie", async (req, res) => {
   }
 });
 
-app.post("/getdietplan", async (req, res) => {
-  if (req.session.userid) {
-    const userid = req.session.userid;
+app.post("/getdietplan/:id", async (req, res) => {
+  if (req.session.userid && req.params.id) {
+    const userid = req.params.id;
     const trainee = new Trainee(userid);
     let dietplan = await trainee.getDietPlan();
     res.json({
@@ -100,6 +115,52 @@ app.post("/getexerciseplan", async (req, res) => {
       active: true,
       plan: exerciseplan,
     });
+  } else {
+    return res.json({ active: false });
+  }
+});
+
+app.post("/addmeal", async (req, res) => {
+  if (req.session.userid) {
+    const { startDate, endDate, description, id } = req.body;
+    const trainee = new Trainee(id);
+
+    let error = await trainee.addMeal(startDate, endDate, description);
+
+    if(error){
+      res.json({
+        active: true,
+        error: error,
+      });
+    }
+    else{
+      res.json({
+        active: true,
+      });
+    }
+  } else {
+    return res.json({ active: false });
+  }
+});
+
+app.post("/addexerciseplan", async (req, res) => {
+  if (req.session.userid) {
+    const { startDate, endDate, description, id } = req.body;
+    const trainee = new Trainee(id);
+
+    let error = await trainee.addExercisePlan(startDate, endDate, description);
+
+    if(error){
+      res.json({
+        active: true,
+        error: error,
+      });
+    }
+    else{
+      res.json({
+        active: true,
+      });
+    }
   } else {
     return res.json({ active: false });
   }
@@ -151,9 +212,9 @@ app.post("/updateexercise", async (req, res) => {
 });
 
 
-app.post("/gettt", async (req, res) => {
-  if (req.session.userid) {
-    const userid = req.session.userid;
+app.post("/gettt/:id", async (req, res) => {
+  if (req.session.userid && req.params.id) {
+    const userid = req.params.id;
     const trainee = new Trainee(userid);
     let ttinfo = await trainee.getTraineeTable();
 
@@ -186,9 +247,9 @@ app.post("/editinfo", async (req, res) => {
 });
 
 
-app.post("/getexercises", async (req, res) => {
-  if (req.session.userid) {
-    const userid = req.session.userid;
+app.post("/getexercises/:id", async (req, res) => {
+  if (req.session.userid && req.params.id) {
+    const userid = req.params.id;
     const trainee = new Trainee(userid);
     let exercises = await trainee.getExercises();
     res.json({

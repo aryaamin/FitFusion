@@ -9,6 +9,34 @@ class Trainee {
     return this.id;
   }
 
+  async addMeal(startDate, endDate, description) {
+
+      let result = await pool.query(`SELECT max(plan_id) FROM diet_plan`);
+      const plan_id = result.rows[0].max + 1;
+
+      try {
+          result = await pool.query(`INSERT INTO diet_plan VALUES ($1, $2, $3, $4, $5)`, [plan_id, this.id, startDate, endDate, description]);
+          // return {"trainee_id" : trainee_id};
+      } catch (e) {
+          return {"error" : e};
+      }
+
+  }
+
+  async addExercisePlan(startDate, endDate, description) {
+
+      let result = await pool.query(`SELECT max(plan_id) FROM exercise_plan`);
+      const plan_id = result.rows[0].max + 1;
+
+      try {
+          result = await pool.query(`INSERT INTO exercise_plan VALUES ($1, $2, $3, $4, $5)`, [plan_id, this.id, startDate, endDate, description]);
+          // return {"trainee_id" : trainee_id};
+      } catch (e) {
+          return {"error" : e};
+      }
+
+  }
+
   async updateCalorie(trainee_id, date, meal, calories) {
 
       let result = await pool.query(`SELECT max(intake_id) FROM calorie_intake`);
