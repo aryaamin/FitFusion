@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
-import { Form, Button, ListGroup, Table } from 'react-bootstrap';
+import { Form, Button, ListGroup, Table } from "react-bootstrap";
 
 const DieticianMeal = () => {
   const [trainee, setTrainee] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [id, setId] = useState(0);
-  const [selectedTrainee, setSelectedTrainee] = useState("");
   const [description, setDescription] = useState("");
   const [workoutPlans, setWorkoutPlans] = useState([]);
 
@@ -51,59 +50,58 @@ const DieticianMeal = () => {
   };
 
   const handleSubmit = (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      let data = {startDate, endDate, id, description};
+    let data = { startDate, endDate, id, description };
 
-      fetch("http://localhost:3001/addmeal", {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body : JSON.stringify(data)
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (!data.active) {
-            navigate("/login");
+    fetch("http://localhost:3001/addmeal", {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.active) {
+          navigate("/login");
+        } else {
+          if (data.error) {
+            alert(data.error);
           } else {
-              if (data.error) {
-                  alert(data.error);
-              } else {
-                  getPlans();
-                  alert(`Successfully added a diet plan`);
-              }
+            getPlans();
+            alert(`Successfully added a diet plan`);
           }
-        });
-
-  }
+        }
+      });
+  };
 
   const handleDelete = (planid) => {
-      fetch("http://localhost:3001/deleteplan", {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-          body : JSON.stringify({planid})
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (!data.active) {
-            navigate("/login");
+    fetch("http://localhost:3001/deleteplan", {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ planid }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.active) {
+          navigate("/login");
+        } else {
+          if (data.error) {
+            alert(data.error);
           } else {
-              if (data.error) {
-                  alert(data.error);
-              } else {
-                  getPlans();
-                  alert(`Successfully deleted the diet plan`);
-              }
+            getPlans();
+            alert(`Successfully deleted the diet plan`);
           }
-        });
-  }
+        }
+      });
+  };
 
   useEffect(() => {
     getTrainees();
@@ -112,8 +110,18 @@ const DieticianMeal = () => {
 
   return (
     <div className="container">
+      <button
+        className="homeicn"
+        type="button"
+        onClick={() => navigate("/home")}
+      >
+        {<HomeIcon />}
+      </button>
       <div className="row">
-        <div className="col-sm-3" style={{ marginTop: "6px", marginLeft: "60px" }}>
+        <div
+          className="col-sm-3"
+          style={{ marginTop: "6px", marginLeft: "60px" }}
+        >
           <h3>Trainees</h3>
           <ListGroup as="ol" numbered>
             {trainee.map((item, index) => (
@@ -131,9 +139,12 @@ const DieticianMeal = () => {
               <Form.Label>Start Date</Form.Label>
               <Form.Control
                 type="date"
+                required
                 placeholder="Enter start date"
                 value={startDate}
-                onChange={(e) => {setStartDate(e.target.value)}}
+                onChange={(e) => {
+                  setStartDate(e.target.value);
+                }}
               />
             </Form.Group>
 
@@ -141,18 +152,28 @@ const DieticianMeal = () => {
               <Form.Label>End Date</Form.Label>
               <Form.Control
                 type="date"
+                required
                 placeholder="Enter end date"
                 value={endDate}
-                onChange={(e) => {setEndDate(e.target.value)}}
+                onChange={(e) => {
+                  setEndDate(e.target.value);
+                }}
               />
             </Form.Group>
 
             <Form.Group controlId="formSelect">
               <Form.Label>Select Trainee</Form.Label>
-              <Form.Control as="select" value={id} onChange={(e) => {setId(e.target.value)}}>
+              <Form.Control
+                as="select"
+                value={id}
+                required
+                onChange={(e) => {
+                  setId(e.target.value);
+                }}
+              >
                 <option value="0">Select a trainee </option>
                 {trainee.map((item, index) => (
-                    <option value = {item.user_id}>{item.name}</option>
+                  <option value={item.user_id}>{item.name}</option>
                 ))}
               </Form.Control>
             </Form.Group>
@@ -162,9 +183,12 @@ const DieticianMeal = () => {
               <Form.Control
                 as="textarea"
                 rows={3}
+                required
                 placeholder="Enter description"
                 value={description}
-                onChange={(e) => {setDescription(e.target.value)}}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
               />
             </Form.Group>
 
@@ -175,37 +199,58 @@ const DieticianMeal = () => {
         </div>
       </div>
 
-     <br/><br/><br/>
-     {id != 0 ? 
-     (
-      <div>
-      <h3>Current Diet Plans For {trainee.filter((t) => {return t.user_id == id})[0].name}</h3>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Description</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {workoutPlans.filter((p) => {return p.trainee_id == id}).map((plan, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{plan.plan_description}</td>
-              <td>{plan.start_date}</td>
-              <td>{plan.end_date}</td>
-              <td>
-                <Button variant="danger" onClick={() => {handleDelete(plan.plan_id)}}>Delete</Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      </div>) : (<div></div>)}
-
+      <br />
+      <br />
+      <br />
+      {id !== 0 ? (
+        <div>
+          <h3>
+            Current Diet Plans For{" "}
+            {
+              trainee.filter((t) => {
+                return t.user_id === id;
+              })[0].name
+            }
+          </h3>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {workoutPlans
+                .filter((p) => {
+                  return p.trainee_id === id;
+                })
+                .map((plan, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{plan.plan_description}</td>
+                    <td>{plan.start_date}</td>
+                    <td>{plan.end_date}</td>
+                    <td>
+                      <Button
+                        variant="danger"
+                        onClick={() => {
+                          handleDelete(plan.plan_id);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };

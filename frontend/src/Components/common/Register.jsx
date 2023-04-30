@@ -72,6 +72,7 @@ const Register = () => {
                         type="text" 
                         placeholder="user id" 
                         id="name" 
+                        required
                         name="name"/>
                 </div>
             </div>
@@ -85,6 +86,7 @@ const Register = () => {
                         type="password" 
                         placeholder="******" 
                         id="password" 
+                        required
                         name="password"/>
                 </div>
             </div>
@@ -98,6 +100,7 @@ const Register = () => {
                         type="text" 
                         placeholder="a@a.com" 
                         id="email" 
+                        required
                         name="email"/>
                 </div>
             </div>
@@ -110,6 +113,8 @@ const Register = () => {
                         className="form-control"
                         type="number" 
                         id="age" 
+                        min={1}
+                        required
                         name="age"/>
                 </div>
             </div>
@@ -132,7 +137,7 @@ const Register = () => {
                      </select>
                 </div>
             </div>
-            {role == "trainee" ? (
+            {role === "trainee" ? (
                 <div>
                 <div className="form-group mb-2">
                     <label htmlFor="Height"> <b> Height: </b> </label>
@@ -142,7 +147,11 @@ const Register = () => {
                             onChange={(e) => setHeight(e.target.value)}
                             className="form-control"
                             type="number" 
+                            step="0.1" 
+                            min="1" 
+                            pattern="\d+(\.\d{1,2})?"
                             id="height" 
+                            required
                             name="height"/>
                     </div>
                 </div>
@@ -155,6 +164,8 @@ const Register = () => {
                             className="form-control"
                             type="number" 
                             id="weight" 
+                            min="1"
+                            required
                             name="weight"/>
                     </div>
                 </div>

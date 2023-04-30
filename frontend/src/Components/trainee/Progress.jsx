@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { VictoryChart, VictoryLine, VictoryLabel, VictoryAxis } from "victory";
+import { VictoryChart, VictoryLine, VictoryAxis } from "victory";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import GaugeChart from "react-gauge-chart";
@@ -22,7 +22,6 @@ const Progress = () => {
   const [inputexercise, setInpExercise] = useState("running");
   const [dateexercise, setDateExercise] = useState("");
   const [duration, setDuration] = useState("");
-  const [role, setRole] = useState("");
   const [user_id, setId] = useState("");
   const idCSS = "hello";
   const id = useParams().id;
@@ -41,15 +40,14 @@ const Progress = () => {
         if (!data.active) {
           navigate("/login");
         } else {
-          setRole(data.info["user_role"]);
           setId(data.info["user_id"]);
         }
       });
   };
 
   const changeWeight = () => {
-    if (user_id != id) {
-        return;
+    if (user_id !== id) {
+      return;
     }
     const userInput = prompt("Enter Weight:");
 
@@ -70,8 +68,7 @@ const Progress = () => {
           .then((data) => {
             if (data.error) {
               alert(data.error);
-            }
-            else{
+            } else {
               getTraineeTable();
             }
           });
@@ -82,8 +79,8 @@ const Progress = () => {
   };
 
   const changeHeight = () => {
-    if (user_id != id) {
-        return;
+    if (user_id !== id) {
+      return;
     }
     const userInput = prompt("Enter Height:");
 
@@ -104,8 +101,7 @@ const Progress = () => {
           .then((data) => {
             if (data.error) {
               alert(data.error);
-            }
-            else{
+            } else {
               getTraineeTable();
             }
           });
@@ -426,7 +422,7 @@ const Progress = () => {
         </div>
 
         <div class="row">
-          {user_id == id ? (
+          {user_id === id ? (
             <div className="col-sm-3" style={{ left: "10px" }}>
               <div className="mx-auto align-self-center">
                 <form
@@ -493,7 +489,7 @@ const Progress = () => {
             <div></div>
           )}
 
-          {user_id == id ? (
+          {user_id === id ? (
             <div className="col-sm-3" style={{ left: "10px" }}>
               <div className="mx-auto align-self-center">
                 <form

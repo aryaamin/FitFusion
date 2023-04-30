@@ -28,7 +28,7 @@ class UserPass {
 
         // const res = await bcrypt.compare(password, hash.rows[0]["hashed_password"]);
 
-        if(password == hash.rows[0]["password"]){
+        if(password === hash.rows[0]["password"]){
             const id = await this.getId();
             return id;
         }

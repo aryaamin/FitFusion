@@ -16,7 +16,7 @@ class User {
       try {
           result = await pool.query(`INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6, $7)`, [id, name, email, password, age, gender, role]);
 
-          if (role == "trainee") {
+          if (role === "trainee") {
               result = await pool.query(`INSERT INTO trainee VALUES ($1, $2, $3, $4, $5)`, [id, activity, height, weight, goal]);
           }
 
