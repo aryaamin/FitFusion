@@ -104,7 +104,7 @@ functionality will include:
     -   Return value: Success code if login is successful, error message
         if not.
 
-### Trainee specific {#trainee-specific .unnumbered}
+### Trainee specific
 
 -   User account management
 
@@ -135,7 +135,7 @@ user interfaces that will be supported include:
     -   Links : A link to the registration page in case the user has
         already registered.
 
-### Trainee specific {#trainee-specific-1 .unnumbered}
+### Trainee specific
 
 -   Trainee dashboard
 
@@ -213,7 +213,7 @@ user interfaces that will be supported include:
         as options to export data or generate reports on nutritional
         intake and progress towards fitness goals.
 
-### Trainer specific {#trainer-specific .unnumbered}
+### Trainer specific
 
 -   Trainer dashboard
 
