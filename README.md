@@ -285,7 +285,7 @@ user interfaces that will be supported include:
   `user_id`     |integer       |Unique ID for each user
   `name`        |varchar(50)   |User's name
   `email`       |varchar(50)   |User's email address
-  `password`    |varchar(50)   |User's password
+  `password`    |varchar(60)   |User's password
   `age`         |integer       |User's age in years
   `gender`      |varchar(10)   |User's gender (male/female/other)
 

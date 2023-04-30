@@ -1,6 +1,7 @@
 from faker import Faker
 import random
 import datetime
+import bcrypt
 
 fake = Faker()
 
@@ -12,10 +13,12 @@ trainee_list = []
 trainer_list = []
 dietician_list = []
 
+credentials = open("credentials.txt", "w")
 for i in range(1, n):
     name = fake.name()
     email = fake.email()
     password = fake.password(length=10)
+    hashed_pass = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode()
     age = random.randint(18, 65)
     gender = random.choice(['male', 'female', 'other'])
     role = random.choice(['trainee', 'trainer', 'dietician'])
@@ -26,8 +29,10 @@ for i in range(1, n):
     if(role == 'dietician'):
         dietician_list.append(i)
         
-    users_data.append((i, name, email, password, age, gender, role))
+    users_data.append((i, name, email, hashed_pass, age, gender, role))
+    credentials.write(f"{email}\t{password}\n")
 
+credentials.close()
 # Generate random data for the Trainee table
 trainee_data = []
 for i in trainee_list:

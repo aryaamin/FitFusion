@@ -5,6 +5,7 @@ const sessions = require("express-session");
 const app = express();
 const cors = require("cors");
 const port = 3001;
+const bcrypt = require("bcrypt");
 const UserPass = require("./Models/userPass_query");
 const User = require("./Models/user_query");
 const Trainee = require("./Models/trainee_query");
@@ -419,8 +420,10 @@ app.post("/register", async (req, res) => {
   if (req.session.userid) {
     //do nothing
   } else {
-    const {name, password, email, age, gender, role, height, weight, goal, activity} = req.body;
+    let {name, password, email, age, gender, role, height, weight, goal, activity} = req.body;
     const user = new User("");
+
+    password = await bcrypt.hash(password, 1);
     const result = await user.createUser(name, password, email, age, gender, role, height, weight, goal, activity);
 
     if (result && result.id) {

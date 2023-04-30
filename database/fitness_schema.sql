@@ -17,7 +17,7 @@ CREATE TABLE Users (
   user_id INTEGER PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
   email VARCHAR(50) NOT NULL UNIQUE,
-  password VARCHAR(50) NOT NULL,
+  password VARCHAR(60) NOT NULL,
   age INTEGER NOT NULL CHECK (age >= 0),
   gender VARCHAR(10) NOT NULL CHECK (gender IN ('male', 'female', 'other')),
   user_role VARCHAR(10) NOT NULL CHECK (user_role IN ('trainee', 'trainer', 'dietician'))
