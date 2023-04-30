@@ -32,12 +32,6 @@ their fitness goals and progress. They will be able to connect with
 fitness trainers who can help them achieve their goals and track their
 progress towards their fitness goals.
 
-## Admin
-
-The admin will have access to all the features of the website, including
-managing user accounts, managing fitness trainers, and managing the
-website's content.
-
 # Data to be Stored
 
 The following entities will be stored in the Fitfusion database:
