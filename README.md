@@ -11,23 +11,39 @@ Arya Amin (200050014)
 ## Setup local postgres database
 
 ### Switch to psql
+```
 sudo -i -u postgres
 psql
+```
 
 ### Create Database and connect to it
+```
 CREATE DATABASE fitness;
 \c fitness
+```
 
 ### Install schema and check tables exist
 First cd to appropriate directory as postgres user
+```
 \i database/fitness_schema.sql
 \d
+```
 
 ### Load sample data
-\i database/fitness_data.sql
+```\i database/fitness_data.sql```
 
 ### Check conninfo and modify config.txt in backend
-\conninfo
+```\conninfo```
+
+## Install node dependencies and start server
+```
+cd backend/```
+npm install package.json
+npm start
+cd ../frontend/
+npm install package.json
+npm start
+```
 
 # Overview of Application
 
