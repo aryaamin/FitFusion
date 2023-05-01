@@ -137,7 +137,7 @@ const Register = () => {
                      </select>
                 </div>
             </div>
-            {role === "trainee" ? (
+            {role == "trainee" ? (
                 <div>
                 <div className="form-group mb-2">
                     <label htmlFor="Height"> <b> Height: </b> </label>

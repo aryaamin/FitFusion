@@ -60,9 +60,9 @@ app.get("/gettrainees", async (req, res) => {
     let role = (await user.getInfo()).user_role;
 
     let query;
-    if (role === "trainer") {
+    if (role == "trainer") {
         query = new Trainer(userid);
-    } else if (role === "dietician") {
+    } else if (role == "dietician") {
         query = new Dietician(userid);
     }
 
@@ -84,9 +84,9 @@ app.get("/getplans", async (req, res) => {
     let role = (await user.getInfo()).user_role;
 
     let query;
-    if (role === "trainer") {
+    if (role == "trainer") {
         query = new Trainer(userid);
-    } else if (role === "dietician") {
+    } else if (role == "dietician") {
         query = new Dietician(userid);
     }
 
@@ -108,9 +108,9 @@ app.post("/deleteplan", async (req, res) => {
     let role = (await user.getInfo()).user_role;
 
     let query;
-    if (role === "trainer") {
+    if (role == "trainer") {
         query = new Trainer(userid);
-    } else if (role === "dietician") {
+    } else if (role == "dietician") {
         query = new Dietician(userid);
     }
 

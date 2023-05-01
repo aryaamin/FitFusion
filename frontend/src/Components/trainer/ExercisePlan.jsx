@@ -204,7 +204,7 @@ const TrainerExercisePlan = () => {
       <br />
       <br />
       <br />
-      {id !== 0 ? (
+      {id != 0 ? (
         <div>
           <h3>
             Current Workout Plans For{" "}

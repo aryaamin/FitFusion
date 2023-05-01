@@ -51,7 +51,7 @@ const Progress = () => {
     }
     const userInput = prompt("Enter Weight:");
 
-    if (userInput !== null) {
+    if (userInput != null) {
       const weight_new = parseFloat(userInput);
 
       if (!isNaN(weight_new) && weight_new >= 0) {
@@ -84,7 +84,7 @@ const Progress = () => {
     }
     const userInput = prompt("Enter Height:");
 
-    if (userInput !== null) {
+    if (userInput != null) {
       const height_new = parseFloat(userInput);
 
       if (!isNaN(height_new) && height_new >= 0) {
@@ -112,10 +112,10 @@ const Progress = () => {
   };
 
   const handleCalorie = (event) => {
-    if (datecalorie === "") {
+    if (datecalorie == "") {
       alert("Select Date");
     }
-    if (inputcalorie === "") {
+    if (inputcalorie == "") {
       alert("Select Calories");
     }
     event.preventDefault();
@@ -143,10 +143,10 @@ const Progress = () => {
 
   const handleExercise = (event) => {
     event.preventDefault();
-    if (dateexercise === "") {
+    if (dateexercise == "") {
       alert("Select Date");
     }
-    if (duration === "") {
+    if (duration == "") {
       alert("Select Duration");
     }
     fetch("http://localhost:3001/updateexercise", {
@@ -212,13 +212,13 @@ const Progress = () => {
           setHeight(data.height);
           setWeight(data.weight);
           setBmi(data.weight / (data.height * data.height));
-          if (data.activitylevel === 1) {
+          if (data.activitylevel == 1) {
             setactivityLevelType("Sedentary");
-          } else if (data.activitylevel === 2) {
+          } else if (data.activitylevel == 2) {
             setactivityLevelType("Lightly Active");
-          } else if (data.activitylevel === 3) {
+          } else if (data.activitylevel == 3) {
             setactivityLevelType("Moderately Active");
-          } else if (data.activitylevel === 4) {
+          } else if (data.activitylevel == 4) {
             setactivityLevelType("Very Active");
           } else {
             setactivityLevelType("Extremely Active ");
@@ -422,7 +422,7 @@ const Progress = () => {
         </div>
 
         <div class="row">
-          {user_id === id ? (
+          {user_id == id ? (
             <div className="col-sm-3" style={{ left: "10px" }}>
               <div className="mx-auto align-self-center">
                 <form
@@ -489,7 +489,7 @@ const Progress = () => {
             <div></div>
           )}
 
-          {user_id === id ? (
+          {user_id == id ? (
             <div className="col-sm-3" style={{ left: "10px" }}>
               <div className="mx-auto align-self-center">
                 <form

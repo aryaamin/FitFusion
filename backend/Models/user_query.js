@@ -16,7 +16,7 @@ class User {
       try {
           result = await pool.query(`INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6, $7)`, [id, name, email, password, age, gender, role]);
 
-          if (role === "trainee") {
+          if (role == "trainee") {
               result = await pool.query(`INSERT INTO trainee VALUES ($1, $2, $3, $4, $5)`, [id, activity, height, weight, goal]);
           }
 
@@ -64,7 +64,7 @@ class User {
   
   async update_trainer(trainer_id) {
     var result = await pool.query(`update trainer set trainer_id = $2 where trainee_id = $1`, [this.id, trainer_id]);
-    if(result.rowCount === 0){
+    if(result.rowCount == 0){
       result = await pool.query(`INSERT into trainer values ($2, $1)`, [this.id, trainer_id]);
     }
     return result.rows;
@@ -72,7 +72,7 @@ class User {
 
   async update_dietician(dietician_id) {
     var result = await pool.query(`update dietician set dietician_id = $2 where trainee_id = $1`, [this.id, dietician_id]);
-    if(result.rowCount === 0){
+    if(result.rowCount == 0){
       result = await pool.query(`INSERT into dietician values ($2, $1)`, [this.id, dietician_id]);
     }
     return result.rows;
