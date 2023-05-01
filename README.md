@@ -7,6 +7,28 @@ Vivek Veer (200050158)\
 Arya Amin (200050014)
 ---
 
+# Instructions for running on Linux
+## Setup local postgres database
+
+### Switch to psql
+sudo -i -u postgres
+psql
+
+### Create Database and connect to it
+CREATE DATABASE fitness;
+\c fitness
+
+### Install schema and check tables exist
+First cd to appropriate directory as postgres user
+\i database/fitness_schema.sql
+\d
+
+### Load sample data
+\i database/fitness_data.sql
+
+### Check conninfo and modify config.txt in backend
+\conninfo
+
 # Overview of Application
 
 Fitfusion is a fitness website that allows users to connect with fitness
