@@ -1,0 +1,561 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[margin=2cm]{geometry}
+
+
+\setlength{\topmargin}{-1in}
+
+\title{\bf Project Report: Fitfusion}
+\author{Adish Shah (200020012), \
+Padakanti Akshay Kiran (200050093), \\ 
+Vivek Veer (200050158), Arya Amin (200050014)}
+\date{May 1, 2023}
+
+\begin{document}
+\maketitle
+
+\section{Link of Final Repo}
+https://github.com/aryaamin/FitFusion
+
+\section{Overview of Application}
+Fitfusion is a fitness website that allows users to connect with fitness trainers,  and track their fitness progress. The website will feature a user-friendly interface and will be accessible on web platform. The application will allow users to create their fitness goals and find fitness trainers who can help them achieve these goals. Trainers can create workout plans and track the progress of their trainees.
+
+\section{Users}
+\subsection{Trainers}
+Fitness trainers will be able to create and manage their profiles, including their personal details, etc. They will also be able to create customized workout plans for their trainees and track their progress.
+
+\subsection{Dieticians}
+Fitness dieticians will be able to create and manage their profiles, including their personal details, etc. They will also be able to create customized diet plans for their trainees and track their progress.
+
+\subsection{Trainees}
+Trainees will be able to create and manage their profiles, including their fitness goals and progress. They will be able to connect with fitness trainers who can help them achieve their goals and track their progress toward their fitness goals.
+
+\section{Data to be Stored}
+The following entities will be stored in the Fitfusion database:
+
+\subsection{User}
+The user entity will contain information about each user, including their name, email address, and password. It will also include their fitness goals and chosen trainer.
+
+\subsection{Trainer}
+The fitness trainer entity will contain information about each fitness trainer, including their personal details and trainees.
+
+\subsection{Dietician}
+The fitness dietician entity will contain information about each fitness dietician, including their personal details and trainees.
+
+\subsection{Workout Plan}
+The workout plan entity will contain information about the customized workout plans created by fitness trainers for their trainees.
+
+\subsection{Diet Plan}
+The diet plan entity will contain information about the customized diet plans created by fitness dieticians for their trainees.
+
+\subsection{Progress}
+The progress entity will contain information about the progress of each trainee towards their fitness goals.
+
+\section{Application Structure}
+
+\subsection{Backend}
+The backend of the Fitfusion website will be built using NodeJS along with PostgreSQL and Express for managing sessions. The main API functionality will include:
+
+\begin{itemize}
+\item User registration
+    \begin{itemize} 
+        \item Endpoint : /register
+        \item Method : POST
+        \item Request Parameters:
+            \begin{itemize}
+                \item email (string): The email address of the user.
+                \item password (string): The password of the user.
+                \item role (string): Trainee or trainer.
+                \item Other relevant information like height, weight, fitness goal and current activity level if role is trainee.
+            \end{itemize}
+        \item Return value: Success code if request is successful, error message if not.
+    \end{itemize}
+\item User login
+    \begin{itemize}
+        \item Endpoint : /login
+        \item Method : POST
+        \item Request Parameters:
+            \begin{itemize}
+                \item email (string): The email address of the user.
+                \item password (string): The password of the user.
+        \end{itemize}
+        \item Return value: Success code if login is successful, error message if not.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Trainee specific}
+\begin{itemize}
+
+\item User account management
+\item Fitness trainer management
+\item Trainee management
+\item Workout plan management
+\item Progress tracking
+\end{itemize}
+
+\subsection{API calls}
+The following API calls will be implemented in the backend
+
+\begin{itemize}
+\item \textbf{Login}:
+\begin{itemize}
+\item \textbf{Endpoint}: /login
+\item \textbf{Method}: POST
+\item \textbf{Request Body}: {username, password}
+\item \textbf{Response Body}: {access\_token, token\_type}
+\end{itemize} 
+
+\item \textbf{Logout}:
+\begin{itemize}
+\item \textbf{Endpoint}: /logout
+\item \textbf{Method}: GET
+\item \textbf{Request Headers}: {Authorization: Bearer access\_token}
+\item \textbf{Response Body}: {message}
+\end{itemize}
+
+\item \textbf{Create User}:
+\begin{itemize}
+\item \textbf{Endpoint}: /register
+\item \textbf{Method}: POST
+\item \textbf{Request Body}: {name, email, password, age, gender}
+\item \textbf{Response Body}: {status codes}
+\end{itemize}
+
+\item \textbf{Get User Profile}:
+\begin{itemize}
+\item \textbf{Endpoint}: /getuserinfo
+\item \textbf{Method}: GET
+\item \textbf{Request Headers}: {Authorization: Bearer access\_token}
+\item \textbf{Response Body}: {id, username, email, first\_name, last\_name, date\_of\_birth, profile\_picture\_url, ...}
+\end{itemize}
+
+\item \textbf{Information about Trainer or Dietician}:
+\begin{itemize}
+\item \textbf{Endpoint}: /trainerinfo or /dieticianinfo
+\item \textbf{Method}: GET
+\item \textbf{Request Body}: {trainee\_id}
+\item \textbf{Response Body}: {Flags like available, assigned and corresponding info like name,age,gender}
+\end{itemize}
+
+\item \textbf{List of Available Trainers or Dieticians}:
+\begin{itemize}
+\item \textbf{Endpoint}: /availabletrainers or /availabledieticians
+\item \textbf{Method}: GET
+\item \textbf{Request Body}: {trainee\_id}
+\item \textbf{Response Body}: {trainers or dieticians}
+\end{itemize}
+
+\item \textbf{List of Current Trainees }:
+\begin{itemize}
+\item \textbf{Endpoint}: /gettrainees
+\item \textbf{Accessible for}: Trainer or Dietician
+\item \textbf{Method}: GET
+\item \textbf{Request Body}: {userid}
+\item \textbf{Response Body}: {status codes}
+\end{itemize}
+
+
+\item \textbf{Update Trainer or Update Dietician}:
+\begin{itemize}
+\item \textbf{Endpoint}: /update\_trainer or /update\_dietician
+\item \textbf{Method}: POST
+\item \textbf{Request Body}: {userid,trainer\_id or dietician\_id}
+\item \textbf{Response Body}: {status codes}
+\end{itemize}
+
+\item \textbf{Edit personal information}:
+\begin{itemize}
+\item \textbf{Endpoint}: /editinfo
+\item \textbf{Method}: POST
+\item \textbf{Request Body}: {name, password, email, age, gender}
+\item \textbf{Response Body}: {status codes}
+\end{itemize}
+
+
+\item \textbf{Create Workout Plan}:
+\begin{itemize}
+\item \textbf{Endpoint}: /addexerciseplan
+\item \textbf{Method}: POST
+\item \textbf{Request Body}: {startdate, enddate, description}
+\item \textbf{Response Body}: {status codes}
+\end{itemize}
+
+\item \textbf{Update exercise}:
+\begin{itemize}
+\item \textbf{Endpoint}: /updateexercise
+\item \textbf{Method}: POST
+\item \textbf{Request Body}: {inputexercise, dateexercise, duration}
+\item \textbf{Response Body}: {status codes}
+\end{itemize}
+
+\item \textbf{Add meal}:
+\begin{itemize}
+\item \textbf{Endpoint}: /addmeal
+\item \textbf{Method}: POST
+\item \textbf{Request Body}: {startDate, endDate, description}
+\item \textbf{Response Body}: {status codes}
+\end{itemize}
+
+
+\item \textbf{Update Calorie Intake}:
+\begin{itemize}
+\item \textbf{Endpoint}: /updatecalorie
+\item \textbf{Method}: POST
+\item \textbf{Request Body}: {date, meal, calories}
+\item \textbf{Response Body}: {status codes}
+\end{itemize}
+
+\item \textbf{Get exercise or diet plan}:
+\begin{itemize}
+\item \textbf{Endpoint}: /getexerciseplan or /getdietplan
+\item \textbf{Method}: POST
+\item \textbf{Request Body}: {trainee\_id}
+\item \textbf{Response Body}: {active flag and plan}
+\end{itemize}
+
+
+\item \textbf{Track Progress}:
+\begin{itemize}
+\item \textbf{Endpoint}: /gettt/:id
+\item \textbf{Method}: POST
+\item \textbf{Request Body}: {weight, body\_measurements, workout\_performance}
+\item \textbf{Response Body}: {results, notes}
+\end{itemize}
+
+
+
+
+\end{itemize}
+
+\subsection{UI}
+The web interface for for Fitfusion will be built using ReactJS. The key user interfaces that will be supported include:
+
+\begin{itemize}
+\item User registration 
+    \begin{itemize}
+        \item Form elements : Registration form for registration of a user.
+        \item Links : A link to the login page in case the user has already registered. 
+    \end{itemize}
+\item User login
+    \begin{itemize}
+        \item Form elements : Login form for logging in.
+        \item Links : A link to the registration page in case the user has already registered. 
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Trainee specific}
+\begin{itemize}
+\item Trainee dashboard
+    \begin{itemize}
+        \item Data displayed: Links to all the important interfaces in the application, such as user profile, trainer profile, workout plan, progress tracking.
+        \item Form elements: None - the dashboard consists of a grid or list of clickable icons or buttons representing each interface, with a brief label or description of each interface.
+        \item Links: None - this interface serves as a centralized location for accessing other interfaces.
+    \end{itemize}
+\item Trainee profile
+    \begin{itemize}
+        \item Data displayed: User's name, profile picture, fitness goals, and any other relevant user information.
+        \item Form elements: Ability for the user to edit their profile information, upload a profile picture.
+        \item Links: Link to the user's dashboard.
+    \end{itemize}
+\item Progress tracking
+    \begin{itemize}
+        \item Data displayed: A visual representation of progress over time in terms of weight, reps, and sets for a specific exercise or workout plan.
+        \item Form elements: Ability for the user to input their progress for specific exercises or workout plans and view their progress over time.
+        \item Links: Links to the user's dashboard and their assigned workout plans.
+    \end{itemize}
+\item Workout plan
+    \begin{itemize}
+        \item Data displayed: Exercises, sets, reps, and any other relevant workout information.
+        \item Form elements: Ability for the trainer to create and edit workout plans for their trainees, and for the trainee to view their assigned workout plans.
+        \item Links: Links to the trainee's profile and progress tracking.
+    \end{itemize}
+\item Trainer search
+    \begin{itemize}
+        \item Data displayed: A list of trainers who match the trainee's search criteria, along with their profiles and areas of expertise.
+        \item Form elements: A search bar and filters (such as location, price, specialty, etc.) to allow trainees to narrow down their search. Clickable trainer profiles with information such as name, photo, bio, reviews, and specialties.
+        \item Links: Links to trainer profiles and the option to contact a trainer to inquire about their services.
+    \end{itemize}
+\item Meal tracking
+    \begin{itemize}
+        \item Data displayed: A record of the trainee's daily food intake, including details such as meal times, calorie and nutrient intake, and notes about meal choices and preferences.
+        \item Form elements: A calendar or diary-style interface where trainees can log their meals and track their nutritional intake. Options to add notes or photos to meals, and to search for foods and recipes to add to the log.
+        \item Links: Links to progress tracking and trainer profiles, as well as options to export data or generate reports on nutritional intake and progress towards fitness goals.
+    \end{itemize}
+\end{itemize}
+\subsubsection*{Trainer specific}
+\begin{itemize}
+\item Trainer dashboard
+    \begin{itemize}
+        \item Data displayed: Links to all the important interfaces in the application, such as trainer profile, trainee progress view, workout plan creator, and meal tracking.
+        \item Form elements: None - the dashboard consists of a grid or list of clickable icons or buttons representing each interface, with a brief label or description of each interface.
+        \item Links: None - this interface serves as a centralized location for accessing other interfaces.
+    \end{itemize}
+\item Trainer profile
+    \begin{itemize}
+        \item Data displayed: Trainer's name, profile picture, bio, areas of expertise, qualifications, and reviews.
+        \item Form elements: Ability for the trainer to edit their profile information, upload a profile picture, and connect with trainees.
+        \item Links: Link to the trainer dashboard, trainee profiles, and trainee progress tracking.
+    \end{itemize}
+\item Trainee progress view for trainers
+    \begin{itemize}
+        \item Data displayed: A visual representation of a trainee's progress towards their fitness goals, including details such as weight loss, strength gains, and other measurements.
+        \item Form elements: A graph or chart that shows progress over time, with options to adjust the data displayed and compare different metrics. Trainers should be able to view and track the progress of their trainees and provide feedback and recommendations.
+        \item Links: Links to the workout plan creator interface and the trainee profile of the trainee being tracked.
+    \end{itemize}
+\item Workout plan creator
+    \begin{itemize}
+        \item Data displayed: A personalized workout plan for a trainee, including details such as exercises, reps, sets, and rest periods.
+        \item Form elements: A drag-and-drop interface where trainers can select and customize exercises based on trainees' goals and preferences. Options to adjust the difficulty level, add notes and feedback, and preview the plan before sharing it with a trainee.
+        \item Links: Links to the trainee progress view interface and the trainee profile of the trainee the workout plan was created for.
+    \end{itemize}
+\item Meal tracking for trainers
+    \begin{itemize}
+        \item Data displayed: A log of the meals consumed by a trainee, including details such as calories, macronutrients, and meal types.
+        \item Form elements: A form where trainers can add and edit meals for their trainees, as well as view a summary of total calorie and macronutrient intake over time.
+        \item Links: Links to the trainee profile of the trainee being tracked.
+    \end{itemize}
+\end{itemize}
+
+
+\section{Fitness App Database Schema}
+
+\subsection*{User Table}
+
+\begin{tabular}{lll}
+\toprule
+Column Name & Data Type & Description \\
+\midrule
+\verb!user_id! & integer & Unique ID for each user \\
+\verb!name! & varchar(50) & User's name \\
+\verb!email! & varchar(50) & User's email address \\
+\verb!password! & varchar(50) & User's password \\
+\verb!age! & integer & User's age in years \\
+\verb!gender! & varchar(10) & User's gender (male/female/other) \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Trainee Table}
+
+\begin{tabular}{lll}
+\toprule
+Column Name & Data Type & Description \\
+\midrule
+\verb!trainee_id! & integer & Unique ID for each trainee same as user\_id from Users\\
+\verb!activity_level! & integer & A value indicating trainee's activity level (1 = sedentary, 2 = lightly active, 3 = moderately active, 4 = very active) \\
+\verb!height! & decimal & User's height in meters \\
+\verb!weight! & decimal & User's weight in kilograms \\
+\verb!goal! & varchar(50) & Trainee's fitness goal (e.g., lose weight, build muscle, maintain weight) \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Trainer Table}
+
+\begin{tabular}{lll}
+\toprule
+Column Name & Data Type & Description \\
+\midrule
+\verb!trainer_id! & integer & Unique ID for each trainer \\
+\verb!trainee_id! & integer & ID of the user who is a trainee \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Dietician Table}
+
+\begin{tabular}{lll}
+\toprule
+Column Name & Data Type & Description \\
+\midrule
+\verb!dietician_id! & integer & Unique ID for each dietician \\
+\verb!trainee_id! & integer & ID of the user who is a trainee \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Calorie Intake Table}
+
+\begin{tabular}{lll}
+\toprule
+Column Name & Data Type & Description \\
+\midrule
+\verb!intake_id! & integer & Unique ID for each calorie intake record \\
+\verb!trainee_id! & integer & ID of the trainee who recorded the intake \\
+\verb!date! & date & Date when the intake was recorded \\
+\verb!meal_type! & varchar(50) & Type of meal (e.g., breakfast, lunch, dinner, snack) \\
+\verb!calories! & integer & Number of calories consumed during the meal \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Exercise Table}
+
+\begin{tabular}{lll}
+\toprule
+Column Name & Data Type & Description \\
+\midrule
+\verb!exercise_id! & integer & Unique ID for each exercise record \\
+\verb!trainee_id! & integer & ID of the trainee who recorded the exercise \\
+\verb!date! & date & Date when the exercise was performed \\
+\verb!exercise_type! & varchar(50) & Type of exercise performed (e.g., running, weightlifting, yoga) \\
+\verb!duration! & integer & Duration of the exercise in minutes \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Diet Plan Table}
+
+\begin{tabular}{lll}
+\toprule
+Column Name & Data Type  \\
+\midrule
+\verb!plan_id! & integer \\
+\verb!trainee_id! & integer  \\
+\verb!start_date! & date  \\
+\verb!end_date! & date  \\
+\verb!plan_description! & text \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Exercise Plan Table}
+
+\begin{tabular}{lll}
+\toprule
+Column Name & Data Type  \\
+\midrule
+\verb!plan_id! & integer  \\
+\verb!trainee_id! & integer  \\
+\verb!start_date! & date \\
+\verb!end_date! & date \\
+\verb!plan_description! & text \
+\bottomrule
+\end{tabular}
+
+\section{SQL Schema}
+
+
+
+\begin{verbatim}
+
+
+CREATE TABLE Users (
+  user_id INTEGER PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  email VARCHAR(50) NOT NULL UNIQUE,
+  password VARCHAR(50) NOT NULL,
+  age INTEGER NOT NULL CHECK (age >= 0),
+  gender VARCHAR(10) NOT NULL CHECK (gender IN ('male', 'female', 'other')),
+  user_role VARCHAR(10) NOT NULL CHECK (user_role IN ('trainee', 'trainer', 'dietician'))
+);
+
+CREATE TABLE Trainee (
+  trainee_id INTEGER PRIMARY KEY REFERENCES Users(user_id),
+  activity_level INTEGER NOT NULL CHECK (activity_level >= 1 AND activity_level <= 5),
+  height DECIMAL NOT NULL CHECK (height >= 0),
+  weight DECIMAL NOT NULL CHECK (weight >= 0),
+  goal VARCHAR(50) NOT NULL CHECK (goal IN ('lose weight', 'gain weight', 'maintain weight', 'build muscle'))
+);
+
+CREATE TABLE Trainer (
+  trainer_id INTEGER,
+  trainee_id INTEGER REFERENCES Trainee(trainee_id)
+);
+
+CREATE TABLE Dietician (
+  dietician_id INTEGER,
+  trainee_id INTEGER REFERENCES Trainee(trainee_id)
+);
+
+CREATE TABLE Calorie_Intake (
+  intake_id INTEGER PRIMARY KEY,
+  trainee_id INTEGER REFERENCES Trainee(trainee_id),
+  date DATE NOT NULL,
+  meal_type VARCHAR(50) NOT NULL CHECK (meal_type IN ('breakfast', 'lunch', 'dinner', 'snack')),
+  calories INTEGER NOT NULL CHECK (calories > 0)
+);
+
+CREATE INDEX intake_idx ON Calorie_Intake (trainee_id, date);
+
+CREATE TABLE Exercise (
+  exercise_id INTEGER PRIMARY KEY,
+  trainee_id INTEGER REFERENCES Trainee(trainee_id),
+  date DATE NOT NULL,
+  exercise_type VARCHAR(50) NOT NULL CHECK (exercise_type IN ('running', 'swimming', 'cycling', 'weightlifting', 'yoga')),
+  duration INTEGER NOT NULL CHECK (duration > 0)
+);
+
+CREATE INDEX exercise_idx ON Exercise (trainee_id, date);
+
+CREATE TABLE Diet_Plan (
+  plan_id INTEGER PRIMARY KEY,
+  trainee_id INTEGER REFERENCES Trainee(trainee_id),
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  plan_description TEXT NOT NULL CHECK (LENGTH(plan_description) > 0)
+);
+
+CREATE INDEX plan_idx ON Diet_Plan (trainee_id, start_date, end_date);
+
+CREATE TABLE Exercise_Plan (
+  plan_id INTEGER PRIMARY KEY,
+  trainee_id INTEGER REFERENCES Trainee(trainee_id),
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  plan_description TEXT NOT NULL CHECK (LENGTH(plan_description) > 0)
+);
+
+CREATE INDEX ex_plan_idx ON Exercise_Plan (trainee_id, start_date, end_date);
+
+--Roles 
+CREATE ROLE dietician_role;
+CREATE ROLE trainer_role;
+CREATE ROLE trainee_role;
+
+GRANT USAGE ON SCHEMA public TO dietician_role, trainer_role, trainee_role;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE Users TO dietician_role, trainer_role, trainee_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE Trainee TO dietician_role, trainer_role, trainee_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE Trainer TO trainer_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE Dietician TO dietician_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE Calorie_Intake TO trainee_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE Exercise TO trainee_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE Diet_Plan TO dietician_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE Exercise_Plan TO trainer_role;
+
+\end{verbatim}
+
+\section{Other Aspects}
+
+\subsection{Test Data}
+Test data will be generated using a combination of real-world data and synthetic data.
+
+\subsection{Security}
+The Fitfusion website will implement several security measures, including session management and XSRF prevention, to ensure the safety and privacy of user data.
+
+\section{Finished Tasks}
+We have finished all of the functionalities (except minor details) that we had stated in our design document. 
+
+\section{Future Plans}
+While we have successfully implemented all of the functionalities we planned for this project, there is always room for improvement and expansion. Some potential future work includes:
+
+\subsection{Profile pictures}
+Users can add profile pictures and they are displayed at relevant pages.
+\subsection{Reminders}
+Users get reminders about their exercise plan through mail or notifications.
+\subsection{Adding food items in a meal}
+Currently we ask the user to input the calories they consumed, instead we can ask them what they ate and calculate the calories ourselves.
+\subsection{Mobile friendly}
+We would like to make our website responsive and mobile friendly.
+\subsection{Website security}
+Even though we have our website is secure against some basic attacks, we would definitely like to add security against some of the more advanced attacks.
+\subsection{Frontend design}
+The current design isn't the most pleasing to the eye, we would like to make the frontend more aesthetic.
+
+\section{Our learnings}
+During the development of this project, we have learned the following:
+
+\subsection{Team Collaboration}
+Working as a team has taught us the importance of communication and collaboration. We have learned to divide tasks and work independently while keeping each other updated on progress. 
+\subsection{Software Development}
+We have learned various software development skills such as requirement gathering, system design, implementation, testing, deployment and most importantly the use of git for collaboration.
+\subsection{Web Development}
+This project gave us hands-on experience in web development technologies such as HTML, CSS, JavaScript and the PERN stack.
+
+\end{document}
