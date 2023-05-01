@@ -134,7 +134,7 @@ const Register = () => {
           <div className="form-group mb-2">
             <label htmlFor="age">
               {" "}
-              <b> Age: </b>{" "}
+              <b> Age in Years: </b>{" "}
             </label>
             <div className="col-sm-auto">
               <input
@@ -176,9 +176,9 @@ const Register = () => {
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
               >
-                <option value="trainer">trainer</option>
-                <option value="trainee">trainee</option>
-                <option value="dietician">dietician</option>
+                <option value="trainer">Trainer</option>
+                <option value="trainee">Trainee</option>
+                <option value="dietician">Dietician</option>
               </select>
             </div>
           </div>
@@ -187,7 +187,7 @@ const Register = () => {
               <div className="form-group mb-2">
                 <label htmlFor="Height">
                   {" "}
-                  <b> Height: </b>{" "}
+                  <b> Height in meters(m): </b>{" "}
                 </label>
                 <div className="col-sm-auto">
                   <input
@@ -207,7 +207,7 @@ const Register = () => {
               <div className="form-group mb-2">
                 <label htmlFor="Weight">
                   {" "}
-                  <b> Weight: </b>{" "}
+                  <b> Weight in KGs: </b>{" "}
                 </label>
                 <div className="col-sm-auto">
                   <input
@@ -243,7 +243,7 @@ const Register = () => {
               <div className="form-group mb-2">
                 <label htmlFor="activity_level">
                   {" "}
-                  <b> Activity Level: </b>{" "}
+                  <b> <a href="https://iprofile.wiley.com/iprofile/html/WhatIsMyActLevelPage.html" target="_blank">Activity Level:</a> </b>{" "}
                 </label>
                 <div className="col-sm-auto">
                   <select
