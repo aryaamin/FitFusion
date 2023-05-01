@@ -152,9 +152,9 @@ app.post("/getcalorie/:id", async (req, res) => {
   }
 });
 
-app.post("/getdietplan/:id", async (req, res) => {
-  if (req.session.userid && req.params.id) {
-    const userid = req.params.id;
+app.post("/getdietplan/", async (req, res) => {
+  if (req.session.userid) {
+    const userid = req.session.userid;
     const trainee = new Trainee(userid);
     let dietplan = await trainee.getDietPlan();
     res.json({
