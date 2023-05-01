@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Home.css"
+import "./Home.css";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import EditIcon from "@mui/icons-material/Edit";
-
 
 const Home = () => {
   const [role, setRole] = useState("");
@@ -28,7 +27,6 @@ const Home = () => {
         navigate("/login");
       });
   };
-
 
   const getUserInfo = () => {
     fetch("http://localhost:3001/getuserinfo", {
@@ -57,53 +55,82 @@ const Home = () => {
 
   useEffect(() => {
     if (!checked) {
-        getUserInfo();
+      getUserInfo();
     }
   }, []);
 
-    if (!checked) {
-        return (<div>
-                    Loading
+  if (!checked) {
+    return <div>Loading</div>;
+  } else {
+    if (role == "trainee") {
+      return (
+        <div>
+          <div className="container my-3 py-5">
+            <button
+              className="logout"
+              type="button"
+              onClick={() => handleLogout()}
+            >
+              {<LogoutRoundedIcon />}
+            </button>
+            <button
+              className="editbtn"
+              type="button"
+              onClick={() => navigate("/trainee/editinfo")}
+            >
+              {<EditIcon />}
+            </button>
+            <h1 className="text-center" style={{ fontWeight: 900 }}>
+              WELCOME {name.toUpperCase()}
+            </h1>
+            <div className="row justify-content-center">
+              <div className="text-center">
+                <div className="p-1">
+                  <div className="text-grow" id="button">
+                    <a href="workout" className="btn-2 btn-blue btn-bg-workout">
+                      <p>Workouts</p>
+                    </a>
+                  </div>
                 </div>
-        );
+                <div className="">
+                  <div className="text-grow" id="button">
+                    <a
+                      href={`progress/${id}`}
+                      className="btn-2 btn-blue btn-bg-progress"
+                    >
+                      <p>Progress</p>
+                    </a>
+                  </div>
+                </div>
+                <div className="">
+                  <div className="text-grow" id="button">
+                    <a
+                      href="dieticianinfo"
+                      className="btn-2 btn-blue btn-bg-dietician"
+                    >
+                      <p>Dieticians</p>
+                    </a>
+                  </div>
+                </div>
+                <div className="p-1">
+                  <div className="text-grow" id="button">
+                    <a
+                      href="trainerinfo"
+                      className="btn-2 btn-blue btn-bg-trainer"
+                    >
+                      <p>Trainers</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
     } else {
-        if (role == "trainee") {
-            return (<div>
-                    <div className="container my-3 py-5">
-                    <button className="logout" type="button" onClick={() => handleLogout()}>{<LogoutRoundedIcon />}</button>
-                    <button className="editbtn" type="button" onClick={() => navigate("/trainee/editinfo")} >{<EditIcon />}</button>
-                      <h1 className="text-center" style={{fontWeight: 900}}>WELCOME {name.toUpperCase()}</h1>
-                      <div className="row justify-content-center">
-                        <div className="text-center">
-                          <div className="p-1">
-                            <div className="text-grow" id="button">
-                              <a href="workout" className="btn-2 btn-blue btn-bg-workout"><p>Workouts</p></a>
-                            </div>
-                          </div>
-                          <div className="">
-                            <div className="text-grow" id="button">
-                              <a href={`progress/${id}`} className="btn-2 btn-blue btn-bg-progress"><p>Progress</p></a>
-                            </div>
-                          </div>
-                          <div className="">
-                            <div className="text-grow" id="button">
-                              <a href="dieticianinfo" className="btn-2 btn-blue btn-bg-dietician"><p>Dieticians</p></a>
-                            </div>
-                          </div>
-                          <div className="p-1">
-                            <div className="text-grow" id="button">
-                              <a href="trainerinfo" className="btn-2 btn-blue btn-bg-trainer"><p>Trainers</p></a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                </div>);
-        } else {
-            navigate("/trainer/home");
-        }
+      navigate("/trainer/home");
     }
+  }
 };
 
 export default Home;

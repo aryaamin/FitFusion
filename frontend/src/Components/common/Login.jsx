@@ -21,14 +21,14 @@ const Login = () => {
         } else if (data.active) {
           navigate("/home");
         }
-        
-        setChecked(true); 
+
+        setChecked(true);
       });
   };
 
   useEffect(() => {
     if (!checked) {
-        checkAlreadyLogged();
+      checkAlreadyLogged();
     }
   });
 
@@ -56,41 +56,49 @@ const Login = () => {
 
   return (
     <div className="container d-flex h-50">
-    <div className="mx-auto align-self-center">
+      <div className="mx-auto align-self-center">
         <h1> Login </h1>
         <form onSubmit={handleLogin} className="form-horizontal" method="POST">
-            <div className="form-group mb-2">
-                <label htmlFor="ID"> <b> Email: </b> </label>
-                <div className="col-sm-auto">
-                    <input 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="form-control"
-                        type="text" 
-                        placeholder="email" 
-                        id="id" 
-                        name="id"/>
-                </div>
+          <div className="form-group mb-2">
+            <label htmlFor="ID">
+              {" "}
+              <b> Email: </b>{" "}
+            </label>
+            <div className="col-sm-auto">
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="form-control"
+                type="text"
+                placeholder="email"
+                id="id"
+                name="id"
+              />
             </div>
-            <div className="form-group mb-2">
-                <label htmlFor="password"> <b> Password: </b> </label>
-                <div className="col-sm-auto">
-                    <input 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="form-control"
-                        type="password" 
-                        placeholder="******" 
-                        id="password" 
-                        name="password"/>
-                </div>
+          </div>
+          <div className="form-group mb-2">
+            <label htmlFor="password">
+              {" "}
+              <b> Password: </b>{" "}
+            </label>
+            <div className="col-sm-auto">
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="form-control"
+                type="password"
+                placeholder="******"
+                id="password"
+                name="password"
+              />
             </div>
-            <button className="btn btn-primary"> Log In </button>
+          </div>
+          <button className="btn btn-primary"> Log In </button>
         </form>
         <a href="/register"> Register </a>
         {error && <div className="alert alert-danger"> {error} </div>}
+      </div>
     </div>
-</div>
   );
 };
 

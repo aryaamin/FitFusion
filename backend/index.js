@@ -46,7 +46,6 @@ app.get("/check-session", (req, res) => {
   }
 });
 
-
 app.get("/logout", (req, res) => {
   req.session.destroy();
   return res.json({});
@@ -61,9 +60,9 @@ app.get("/gettrainees", async (req, res) => {
 
     let query;
     if (role == "trainer") {
-        query = new Trainer(userid);
+      query = new Trainer(userid);
     } else if (role == "dietician") {
-        query = new Dietician(userid);
+      query = new Dietician(userid);
     }
 
     let info = await query.getTrainees();
@@ -85,9 +84,9 @@ app.get("/getplans", async (req, res) => {
 
     let query;
     if (role == "trainer") {
-        query = new Trainer(userid);
+      query = new Trainer(userid);
     } else if (role == "dietician") {
-        query = new Dietician(userid);
+      query = new Dietician(userid);
     }
 
     let info = await query.getPlans();
@@ -109,9 +108,9 @@ app.post("/deleteplan", async (req, res) => {
 
     let query;
     if (role == "trainer") {
-        query = new Trainer(userid);
+      query = new Trainer(userid);
     } else if (role == "dietician") {
-        query = new Dietician(userid);
+      query = new Dietician(userid);
     }
 
     let info = await query.deletePlan(req.body.planid);
@@ -187,13 +186,12 @@ app.post("/addmeal", async (req, res) => {
 
     let error = await trainee.addMeal(startDate, endDate, description);
 
-    if(error){
+    if (error) {
       res.json({
         active: true,
         error: error,
       });
-    }
-    else{
+    } else {
       res.json({
         active: true,
       });
@@ -210,13 +208,12 @@ app.post("/addexerciseplan", async (req, res) => {
 
     let error = await trainee.addExercisePlan(startDate, endDate, description);
 
-    if(error){
+    if (error) {
       res.json({
         active: true,
         error: error,
       });
-    }
-    else{
+    } else {
       res.json({
         active: true,
       });
@@ -231,14 +228,18 @@ app.post("/updatecalorie", async (req, res) => {
     const userid = req.session.userid;
     const trainee = new Trainee(userid);
     const { datecalorie, meal, inputcalorie } = req.body;
-    let error = await trainee.updateCalorie(userid, datecalorie, meal, inputcalorie);
-    if(error){
+    let error = await trainee.updateCalorie(
+      userid,
+      datecalorie,
+      meal,
+      inputcalorie
+    );
+    if (error) {
       res.json({
         active: true,
         error: "Unable to Submit",
       });
-    }
-    else{
+    } else {
       res.json({
         active: true,
       });
@@ -253,14 +254,18 @@ app.post("/updateexercise", async (req, res) => {
     const userid = req.session.userid;
     const trainee = new Trainee(userid);
     const { inputexercise, dateexercise, duration } = req.body;
-    let error = await trainee.updateExercise(userid, dateexercise, inputexercise, duration);
-    if(error){
+    let error = await trainee.updateExercise(
+      userid,
+      dateexercise,
+      inputexercise,
+      duration
+    );
+    if (error) {
       res.json({
         active: true,
         error: "Unable to Submit",
       });
-    }
-    else{
+    } else {
       res.json({
         active: true,
       });
@@ -270,7 +275,6 @@ app.post("/updateexercise", async (req, res) => {
   }
 });
 
-
 app.post("/gettt/:id", async (req, res) => {
   if (req.session.userid && req.params.id) {
     const userid = req.params.id;
@@ -278,13 +282,13 @@ app.post("/gettt/:id", async (req, res) => {
     let ttinfo = await trainee.getTraineeTable();
 
     if (ttinfo) {
-        res.json({
-          active: true,
-          goal: ttinfo["goal"],
-          activitylevel: ttinfo["activity_level"],
-          height: ttinfo["height"],
-          weight: ttinfo["weight"],
-        });
+      res.json({
+        active: true,
+        goal: ttinfo["goal"],
+        activitylevel: ttinfo["activity_level"],
+        height: ttinfo["height"],
+        weight: ttinfo["weight"],
+      });
     }
   } else {
     return res.json({ active: false });
@@ -300,8 +304,7 @@ app.post("/editinfo", async (req, res) => {
     res.json({
       active: true,
     });
-  }
-  else{
+  } else {
     return res.json({ active: false });
   }
 });
@@ -310,16 +313,15 @@ app.post("/updateheight", async (req, res) => {
   const userid = req.session.userid;
   const user = new Trainee(userid);
   await user.updateHeight(req.body.height_new);
-  res.json({error:false});
+  res.json({ error: false });
 });
 
 app.post("/updateweight", async (req, res) => {
   const userid = req.session.userid;
   const user = new Trainee(userid);
   await user.updateWeight(req.body.weight_new);
-  res.json({error:false});
+  res.json({ error: false });
 });
-
 
 app.post("/getexercises/:id", async (req, res) => {
   if (req.session.userid && req.params.id) {
@@ -328,10 +330,9 @@ app.post("/getexercises/:id", async (req, res) => {
     let exercises = await trainee.getExercises();
     res.json({
       active: true,
-      exercises: exercises
+      exercises: exercises,
     });
-  }
-  else{
+  } else {
     return res.json({ active: false });
   }
 });
@@ -341,22 +342,19 @@ app.post("/trainerinfo", async (req, res) => {
     const userid = req.session.userid;
     const user = new Trainee(userid);
     let trainerinfo = await user.getTrainerInfo();
-    if(trainerinfo){
+    if (trainerinfo) {
       res.json({
         active: true,
         assigned: true,
-        trainerinfo: trainerinfo
+        trainerinfo: trainerinfo,
       });
-    }
-    else{
+    } else {
       res.json({
         active: true,
         assigned: false,
       });
     }
-    
-  }
-  else{
+  } else {
     return res.json({ active: false });
   }
 });
@@ -366,21 +364,19 @@ app.post("/dieticianinfo", async (req, res) => {
     const userid = req.session.userid;
     const user = new Trainee(userid);
     let dieticianinfo = await user.getDieticianInfo();
-    if(dieticianinfo){
+    if (dieticianinfo) {
       res.json({
         active: true,
         assigned: true,
-        dieticianinfo: dieticianinfo
+        dieticianinfo: dieticianinfo,
       });
-    }
-    else{
+    } else {
       res.json({
         active: true,
         assigned: false,
       });
     }
-  }
-  else{
+  } else {
     return res.json({ active: false });
   }
 });
@@ -390,7 +386,7 @@ app.post("/availabletrainers", async (req, res) => {
   const user = new User(userid);
   let trainers = await user.availableTrainers();
   res.json({
-    trainers: trainers
+    trainers: trainers,
   });
 });
 
@@ -399,7 +395,7 @@ app.post("/availabledieticians", async (req, res) => {
   const user = new User(userid);
   let dieticians = await user.availableDieticians();
   res.json({
-    dieticians: dieticians
+    dieticians: dieticians,
   });
 });
 
@@ -407,25 +403,47 @@ app.post("/update_trainer", async (req, res) => {
   const userid = req.session.userid;
   const user = new User(userid);
   await user.update_trainer(req.body.trainer_id);
-  res.json({error:false});
+  res.json({ error: false });
 });
 
 app.post("/update_dietician", async (req, res) => {
   const userid = req.session.userid;
   const user = new User(userid);
   await user.update_dietician(req.body.dietician_id);
-  res.json({error:false});
+  res.json({ error: false });
 });
 
 app.post("/register", async (req, res) => {
   if (req.session.userid) {
     //do nothing
   } else {
-    let {name, password, email, age, gender, role, height, weight, goal, activity} = req.body;
+    let {
+      name,
+      password,
+      email,
+      age,
+      gender,
+      role,
+      height,
+      weight,
+      goal,
+      activity,
+    } = req.body;
     const user = new User("");
 
     password = await bcrypt.hash(password, 1);
-    const result = await user.createUser(name, password, email, age, gender, role, height, weight, goal, activity);
+    const result = await user.createUser(
+      name,
+      password,
+      email,
+      age,
+      gender,
+      role,
+      height,
+      weight,
+      goal,
+      activity
+    );
 
     if (result && result.id) {
       req.session.userid = result.id;

@@ -37,7 +37,10 @@ function App() {
         <Route path="/trainer/home" element={<TrainerHome />} />
         <Route path="/trainer/editinfo" element={<TrainerEditInfo />} />
         <Route path="/trainer/progress" element={<TrainerProgress />} />
-        <Route path="/trainer/exerciseplans" element={<TrainerExercisePlan />} />
+        <Route
+          path="/trainer/exerciseplans"
+          element={<TrainerExercisePlan />}
+        />
         <Route path="/dietician/home" element={<DieticianHome />} />
         <Route path="/dietician/meals" element={<DieticianMeal />} />
       </Routes>

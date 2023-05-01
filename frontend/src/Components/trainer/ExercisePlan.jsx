@@ -27,7 +27,7 @@ const TrainerExercisePlan = () => {
           navigate("/login");
         } else {
           setTrainee(data.info);
-          console.log(trainee); 
+          console.log(trainee);
         }
       });
   };
@@ -46,7 +46,7 @@ const TrainerExercisePlan = () => {
           navigate("/login");
         } else {
           setWorkoutPlans(data.info);
-          console.log(workoutPlans); 
+          console.log(workoutPlans);
         }
       });
   };

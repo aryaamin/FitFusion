@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const TrainerEditinfo = () => {
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
-    const [age, setAge] = useState("");
-    const [gender, setGender] = useState("");
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const checkAlreadyLogged = async (event) => {
     await fetch("http://localhost:3001/check-session", {
@@ -73,87 +73,110 @@ const TrainerEditinfo = () => {
 
   return (
     <div className="container d-flex h-50">
-    <div className="mx-auto align-self-center">
+      <div className="mx-auto align-self-center">
         <h1> EDIT INFO </h1>
         <form onSubmit={handleEditinfo} className="form-horizontal">
-            <div className="form-group mb-2">
-                <label htmlFor="name"> <b> Name: </b> </label>
-                <div className="col-sm-auto">
-                    <input 
-                        value={name} 
-                        onChange={(e) => setName(e.target.value)}
-                        className="form-control"
-                        type="text" 
-                        id="name" 
-                        required
-                        name="name"/>
-                </div>
+          <div className="form-group mb-2">
+            <label htmlFor="name">
+              {" "}
+              <b> Name: </b>{" "}
+            </label>
+            <div className="col-sm-auto">
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="form-control"
+                type="text"
+                id="name"
+                required
+                name="name"
+              />
             </div>
-            <div className="form-group mb-2">
-                <label htmlFor="password"> <b> Password: </b> </label>
-                <div className="col-sm-auto">
-                    <input 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="form-control"
-                        type="text" 
-                        id="password" 
-                        required
-                        name="password"/>
-                </div>
+          </div>
+          <div className="form-group mb-2">
+            <label htmlFor="password">
+              {" "}
+              <b> Password: </b>{" "}
+            </label>
+            <div className="col-sm-auto">
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="form-control"
+                type="text"
+                id="password"
+                required
+                name="password"
+              />
             </div>
-            <div className="form-group mb-2">
-                <label htmlFor="email"> <b> Email: </b> </label>
-                <div className="col-sm-auto">
-                    <input 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="form-control"
-                        type="text" 
-                        id="email" 
-                        required
-                        name="email"/>
-                </div>
+          </div>
+          <div className="form-group mb-2">
+            <label htmlFor="email">
+              {" "}
+              <b> Email: </b>{" "}
+            </label>
+            <div className="col-sm-auto">
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="form-control"
+                type="text"
+                id="email"
+                required
+                name="email"
+              />
             </div>
-            <div className="form-group mb-2">
-                <label htmlFor="age"> <b> Age: </b> </label>
-                <div className="col-sm-auto">
-                    <input 
-                        value={age} 
-                        onChange={(e) => setAge(e.target.value)}
-                        className="form-control"
-                        type="number" 
-                        step="1"
-                        placeholder="" 
-                        id="age" 
-                        min="1"
-                        required
-                        name="age"/>
-                </div>
+          </div>
+          <div className="form-group mb-2">
+            <label htmlFor="age">
+              {" "}
+              <b> Age: </b>{" "}
+            </label>
+            <div className="col-sm-auto">
+              <input
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                className="form-control"
+                type="number"
+                step="1"
+                placeholder=""
+                id="age"
+                min="1"
+                required
+                name="age"
+              />
             </div>
-            <div className="form-group mb-2">
-                <label htmlFor="age"> <b> Gender: </b> </label>
-                <div className="col-sm-auto">
-                <select
-                    id="dropdown"
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                  >
-                    <option value="male">male</option>
-                    <option value="female">female</option>
-                    <option value="other">other</option>
-                  </select>
-                </div>
+          </div>
+          <div className="form-group mb-2">
+            <label htmlFor="age">
+              {" "}
+              <b> Gender: </b>{" "}
+            </label>
+            <div className="col-sm-auto">
+              <select
+                id="dropdown"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              >
+                <option value="male">male</option>
+                <option value="female">female</option>
+                <option value="other">other</option>
+              </select>
             </div>
-            <button className="btn btn-primary"> Submit </button>
+          </div>
+          <button className="btn btn-primary"> Submit </button>
         </form>
-        <button 
-            className="btn btn-primary"
-            type="button"
-            onClick={() => navigate("/home")}> Home </button>
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={() => navigate("/home")}
+        >
+          {" "}
+          Home{" "}
+        </button>
         {error && <div className="alert alert-danger"> {error} </div>}
+      </div>
     </div>
-</div>
   );
 };
 

@@ -27,7 +27,6 @@ const TrainerProgress = () => {
       });
   };
 
-
   useEffect(() => {
     getTrainees();
   }, []);
@@ -37,7 +36,7 @@ const TrainerProgress = () => {
       <button
         className="homeicn"
         type="button"
-        style={{marginLeft: "10px"}}
+        style={{ marginLeft: "10px" }}
         onClick={() => navigate("/home")}
       >
         {<HomeIcon />}

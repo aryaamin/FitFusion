@@ -31,11 +31,7 @@ const Home = () => {
     navigateToHome();
   });
 
-
-  return (
-    <div className="container d-flex h-50">
-    </div>
-  );
+  return <div className="container d-flex h-50"></div>;
 };
 
 export default Home;

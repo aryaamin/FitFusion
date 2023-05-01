@@ -66,7 +66,7 @@ const Workout = () => {
       <button
         className="homeicn"
         type="button"
-        style={{marginLeft: "10px"}}
+        style={{ marginLeft: "10px" }}
         onClick={() => navigate("/home")}
       >
         {<HomeIcon />}
