@@ -1,4 +1,4 @@
-# Fitness_WebApp
+# FitFusion
 
 ---
 Adish Shah (200020012)\
