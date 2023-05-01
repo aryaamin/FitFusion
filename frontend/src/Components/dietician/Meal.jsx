@@ -208,7 +208,7 @@ const DieticianMeal = () => {
             Current Diet Plans For{" "}
             {
               trainee.filter((t) => {
-                return t.user_id === id;
+                return t.user_id == id;
               })[0].name
             }
           </h3>
@@ -225,7 +225,7 @@ const DieticianMeal = () => {
             <tbody>
               {workoutPlans
                 .filter((p) => {
-                  return p.trainee_id === id;
+                  return p.trainee_id == id;
                 })
                 .map((plan, index) => (
                   <tr key={index}>

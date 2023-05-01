@@ -39,7 +39,6 @@ const TrainerEditinfo = () => {
           navigate("/login");
         } else {
           setName(data.info["name"]);
-          setPassword(data.info["password"]);
           setAge(data.info["age"]);
           setEmail(data.info["email"]);
           setGender(data.info["gender"]);

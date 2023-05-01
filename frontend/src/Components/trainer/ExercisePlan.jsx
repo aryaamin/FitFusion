@@ -27,6 +27,7 @@ const TrainerExercisePlan = () => {
           navigate("/login");
         } else {
           setTrainee(data.info);
+          console.log(trainee); 
         }
       });
   };
@@ -45,6 +46,7 @@ const TrainerExercisePlan = () => {
           navigate("/login");
         } else {
           setWorkoutPlans(data.info);
+          console.log(workoutPlans); 
         }
       });
   };
@@ -208,7 +210,7 @@ const TrainerExercisePlan = () => {
             Current Workout Plans For{" "}
             {
               trainee.filter((t) => {
-                return t.user_id === id;
+                return t.user_id == id;
               })[0].name
             }
           </h3>
@@ -225,7 +227,7 @@ const TrainerExercisePlan = () => {
             <tbody>
               {workoutPlans
                 .filter((p) => {
-                  return p.trainee_id === id;
+                  return p.trainee_id == id;
                 })
                 .map((plan, index) => (
                   <tr key={index}>
