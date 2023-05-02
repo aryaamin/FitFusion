@@ -293,7 +293,8 @@ app.post("/gettt/:id", async (req, res) => {
 
 app.post("/editinfo", async (req, res) => {
   if (req.session.userid) {
-    const { name, password, email, age, gender } = req.body;
+    let { name, password, email, age, gender } = req.body;
+    password = await bcrypt.hash(password, 1);
     const user = new User(req.session.userid);
     const result = await user.editinfo(name, password, email, age, gender);
     res.json({
