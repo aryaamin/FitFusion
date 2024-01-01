@@ -399,7 +399,6 @@ Test data will be generated using a combination of real-world data and
 synthetic data.
 
 ## Security
-
 The Fitfusion website will implement several security measures,
 including session management and XSRF prevention, to ensure the safety
 and privacy of user data.
